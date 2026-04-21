@@ -10,7 +10,6 @@ import retrofit2.Response
 class GrupoRepository (requireContext: Context) {
     private val api = RetrofitClient.instanceGrupo
 
-    // Esta es una "suspend function", solo se puede llamar desde una corrutina
     suspend fun cargarGrupos(usuario: UsuarioResponse): Response<Collection<GrupoResponse>> {
         return api.cargarGrupos(usuario)
     }
@@ -20,6 +19,6 @@ class GrupoRepository (requireContext: Context) {
     }
 
     suspend fun eliminarGrupos(idGrupo  : Int?): Response<Unit> {
-        return api.eliminarGrupos(idGrupo)
+        return api.desactivarGrupo(idGrupo)
     }
 }

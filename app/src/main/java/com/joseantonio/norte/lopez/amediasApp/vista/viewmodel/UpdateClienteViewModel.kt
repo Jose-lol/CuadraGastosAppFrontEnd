@@ -11,11 +11,9 @@ import kotlinx.coroutines.withContext
 
 class UpdateClienteViewModel() : ViewModel() {
 
-    // LiveData observable del cliente actualizado
     private val _updateUsuarioResult = MutableLiveData<Usuario?>()
     val updateUsuarioResult: LiveData<Usuario?> get() = _updateUsuarioResult
 
-    // Método para actualizar cliente
     fun updateCliente(usuario: Usuario) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

@@ -5,7 +5,9 @@ import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface GrupoApiService {
 
@@ -15,6 +17,9 @@ interface GrupoApiService {
     @POST("/grupo/guardar")
     suspend fun guardarGrupos(@Body grupoRequest : GrupoRequest): Response<Unit>
 
-    @POST("/grupo/eliminar")
-    suspend fun eliminarGrupos(@Body idGrupo : Int?): Response<Unit>
+    @PATCH("grupo/{idGrupo}/desactivar")
+    suspend fun desactivarGrupo(@Path("idGrupo") idGrupo: Int?): Response<Unit>
+
+    @PATCH("grupo/{idGrupo}/usuarios/{idUsuario}/desactivar")
+    suspend fun desactivarUsuarioGrupo(@Path("idGrupo") idGrupo: Int?): Response<Unit>
 }
