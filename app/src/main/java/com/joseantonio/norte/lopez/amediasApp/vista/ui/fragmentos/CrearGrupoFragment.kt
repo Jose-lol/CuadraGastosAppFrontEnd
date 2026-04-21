@@ -1,5 +1,6 @@
 package com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -17,12 +18,16 @@ import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.entity.Grupo
 import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.CrearGruposViewModel
+import java.time.Clock
+import java.time.LocalDateTime
 import kotlin.getValue
+
 
 
 class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
 
+    lateinit var clock: Clock
     private val viewModel: CrearGruposViewModel by viewModels {
         object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -31,6 +36,7 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
             }
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,10 +53,12 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
             val grupo = Grupo(
                 nombre = txtNombreGrupo.text.toString(),
-                estado = "Activo"
+                estado = "Sin gasto",
+                activo = true,
+                fechaAlta = LocalDateTime.now(clock)
             )
-            val grupoRequest = GrupoRequest(grupo, usuario)
-            viewModel.crearGrupo(grupoRequest)
+            val grupoRequest = GrupoRequest(grupo)
+            viewModel.crearGrupo(usuario.idUsuario,grupoRequest)
         }
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->

@@ -18,10 +18,10 @@ class CrearGruposViewModel (private val repository: GrupoRepository) : ViewModel
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    fun  crearGrupo(grupoRequest  : GrupoRequest) {
+    fun  crearGrupo(idUsuario : Int,grupoRequest  : GrupoRequest) {
         viewModelScope.launch {
             try {
-                val response = repository.guardarGrupos(grupoRequest)
+                val response = repository.guardarGrupos(idUsuario,grupoRequest)
                 if (response.isSuccessful) {
                     _grupo.value = response.body()
                 } else {

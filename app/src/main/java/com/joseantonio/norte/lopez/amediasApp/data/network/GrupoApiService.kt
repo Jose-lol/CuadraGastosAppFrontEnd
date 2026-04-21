@@ -11,15 +11,13 @@ import retrofit2.http.Path
 
 interface GrupoApiService {
 
-    @POST("/grupo/cargar")
-    suspend fun cargarGrupos(@Body usuario: UsuarioResponse): Response<Collection<GrupoResponse>>
+    @POST("/grupo/{idUsuario}/cargar")
+    suspend fun cargarGrupos(@Path("idUsuario") idUsuario: Int): Response<Collection<GrupoResponse>>
 
-    @POST("/grupo/guardar")
-    suspend fun guardarGrupos(@Body grupoRequest : GrupoRequest): Response<Unit>
+    @POST("/grupo/{idUsuario}/guardar")
+    suspend fun guardarGrupos(@Path("idUsuario") idUsuario: Int,@Body grupoRequest : GrupoRequest): Response<Unit>
 
     @PATCH("grupo/{idGrupo}/desactivar")
     suspend fun desactivarGrupo(@Path("idGrupo") idGrupo: Int?): Response<Unit>
 
-    @PATCH("grupo/{idGrupo}/usuarios/{idUsuario}/desactivar")
-    suspend fun desactivarUsuarioGrupo(@Path("idGrupo") idGrupo: Int?): Response<Unit>
 }

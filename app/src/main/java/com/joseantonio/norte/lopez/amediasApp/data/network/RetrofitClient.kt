@@ -23,4 +23,13 @@ object RetrofitClient {
 
         retrofit.create(GrupoApiService::class.java)
     }
+
+    val instanceUsuarioGrupo: UsuarioGrupoApiService by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(UsuarioGrupoApiService::class.java)
+    }
 }

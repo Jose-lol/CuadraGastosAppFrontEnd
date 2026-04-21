@@ -44,7 +44,7 @@ class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
 
         setupRecyclerView(view)
 
-        viewModel.cargarGrupos(SessionManager.usuario)
+        viewModel.cargarGrupos(SessionManager.usuario.idUsuario)
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->
             grupos?.let {

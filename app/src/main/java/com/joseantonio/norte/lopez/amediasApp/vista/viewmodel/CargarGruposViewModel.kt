@@ -19,10 +19,10 @@ class CargarGruposViewModel (private val repository: GrupoRepository) : ViewMode
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    fun cargarGrupos(usuario: UsuarioResponse) {
+    fun cargarGrupos(idUsuario : Int) {
         viewModelScope.launch {
             try {
-                val response = repository.cargarGrupos(usuario)
+                val response = repository.cargarGrupos(idUsuario)
                 if (response.isSuccessful) {
                     _grupo.value = response.body()
                 } else {
