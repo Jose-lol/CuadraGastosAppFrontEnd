@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmento_login">
+
+    <!-- Fragmento de Login -->
+    <fragment
+        android:id="@+id/fragmento_login"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.LoginFragment"
+        android:label="Login" >
+
+        <!-- Acción para ir al fragmento de Registro -->
+        <action
+            android:id="@+id/action_fragmento_login_to_fragmento_registro"
+            app:destination="@id/fragmento_registro" />
+
+        <!-- Acción para ir al fragmento de Menu principal -->
+        <action
+            android:id="@+id/action_fragmento_login_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
+    </fragment>
+
+    <!-- Fragmento de Registro -->
+    <fragment
+        android:id="@+id/fragmento_registro"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.RegistroFragment"
+        android:label="Registro">
+
+        <!-- Acción para volver al Login -->
+        <action
+            android:id="@+id/action_fragmento_registro_to_fragmento_login"
+            app:destination="@id/fragmento_login" />
+    </fragment>
+
+    <!-- Fragmento de lista de grupos -->
+    <fragment
+        android:id="@+id/fragmento_grupo_principal"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.GrupoPrincipalFragment"
+        android:label="grupo_principal">
+
+        <action
+            android:id="@+id/action_fragmento_grupo_principal_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
+        <action
+            android:id="@+id/action_fragmento_grupo_principal_to_fragmento_crear_grupo"
+            app:destination="@id/fragmento_crear_grupo" />
+        <action
+            android:id="@+id/action_fragmento_grupo_principal_to_fragmento_login"
+            app:popUpTo="@id/fragmento_login"
+            app:popUpToInclusive="true"
+            app:destination="@id/fragmento_login" />
+    </fragment>
+
+    <!-- Fragmento Perfil -->
+    <fragment
+        android:id="@+id/fragmento_perfil"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.PerfilFragment"
+        android:label="Perfil">
+
+        <!-- Acción desde Perfil hacia menu -->
+        <action
+            android:id="@+id/action_fragmento_perfil_to_fragmento_menu"
+            app:destination="@id/fragmento_grupo_principal" />
+
+        <!-- Acción desde Perfil a Modificar Perfil -->
+        <action
+            android:id="@+id/action_fragmento_perfil_to_fragmento_modificar_perfil"
+            app:destination="@id/fragmento_modificar_perfil" />
+    </fragment>
+
+    <!-- Fragmento Modificar Perfil -->
+    <fragment
+        android:id="@+id/fragmento_modificar_perfil"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.ModificarPerfilFragment"
+        android:label="modificar_perfil">
+
+        <!-- Acción para volver a Perfil -->
+        <action
+            android:id="@+id/action_fragmento_modificar_perfil_to_fragmento_perfil"
+            app:destination="@id/fragmento_perfil" />
+    </fragment>
+
+    <!-- Fragmento crear grupo-->
+    <fragment
+        android:id="@+id/fragmento_crear_grupo"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.CrearGrupoFragment"
+        android:label="crear_grupo">
+
+        <!-- Acción para volver a grupos -->
+        <action
+            android:id="@+id/action_fragmento_crear_grupo_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
+    </fragment>
+
+    <!-- Fragmento detalle  grupo-->
+    <fragment
+        android:id="@+id/fragmento_detalle_grupo"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.DetalleGrupoFragment"
+        android:label="detalle_grupo">
+
+        <action
+            android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_configurar_grupo"
+            app:destination="@id/fragmento_configurar_grupo" />
+        <action
+            android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
+    </fragment>
+
+    <!-- Fragmento configuracion grupo-->
+    <fragment
+        android:id="@+id/fragmento_configurar_grupo"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.ConfigurarGrupoFragment"
+        android:label="configurar_grupo">
+
+        <action
+            android:id="@+id/action_fragmento_configurar_grupo_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
+    </fragment>
+
+</navigation>
