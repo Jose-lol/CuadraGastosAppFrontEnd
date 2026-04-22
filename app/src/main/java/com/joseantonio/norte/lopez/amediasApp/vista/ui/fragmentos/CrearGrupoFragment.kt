@@ -15,19 +15,20 @@ import androidx.navigation.fragment.findNavController
 import com.joseantonio.norte.lopez.amediasApp.R
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
+import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
 import com.joseantonio.norte.lopez.amediasApp.data.entity.Grupo
 import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.CrearGruposViewModel
 import java.time.Clock
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import kotlin.getValue
 
 
 
 class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
-
-    lateinit var clock: Clock
+    lateinit var usuario : UsuarioResponse
     private val viewModel: CrearGruposViewModel by viewModels {
         object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -47,18 +48,26 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
         val btnTipoViaje = view.findViewById<Button>(R.id.btnTipoViaje)
         val btnTipoOtro = view.findViewById<Button>(R.id.btnTipoOtro)
         val btnCrearGrupo = view.findViewById<Button>(R.id.btnCrearGrupo)
-        val usuario= SessionManager.usuario
+
+        val clock=Clock.systemUTC()
 
         btnCrearGrupo.setOnClickListener {
 
-            val grupo = Grupo(
-                nombre = txtNombreGrupo.text.toString(),
-                estado = "Sin gasto",
-                activo = true,
-                fechaAlta = LocalDateTime.now(clock)
+            var nombre = txtNombreGrupo.text.toString()
+            var estado = "Sin gasto"
+            var activo = true
+            var fechaAlta = LocalDateTime.now(clock)
+                .truncatedTo(ChronoUnit.SECONDS)
+                .toString()
+
+            val grupoRequest = GrupoRequest(null
+                ,nombre
+                ,estado
+                ,activo
+                ,fechaAlta
+                ,SessionManager.usuario.idUsuario
             )
-            val grupoRequest = GrupoRequest(grupo)
-            viewModel.crearGrupo(usuario.idUsuario,grupoRequest)
+            viewModel.crearGrupo(grupoRequest)
         }
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->

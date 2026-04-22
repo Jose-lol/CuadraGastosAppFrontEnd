@@ -28,6 +28,7 @@ import kotlin.getValue
 
 class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
 
+    lateinit var grupoRequest : GrupoRequest
     private val sharedViewModel: GrupoSharedViewModel by activityViewModels()
     private val viewModel: ConfigurarGruposViewModel by viewModels {
         ConfigurarGruposViewModelFactory(
@@ -43,17 +44,21 @@ class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
         val btnAtras = view.findViewById<ImageButton>(R.id.btnAtras)
         val btnEliminarGrupo = view.findViewById<Button>(R.id.btnEliminarGrupo)
         val btnSalirGrupo = view.findViewById<Button>(R.id.btnSalirGrupo)
+        grupoRequest = GrupoRequest()
 
         btnEliminarGrupo.setOnClickListener {
 
             val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
+            grupoRequest.idGrupo=idGrupo
+            grupoRequest.idUsuario= SessionManager.usuario.idUsuario
 
-            viewModel.eliminarGrupo(idGrupo)
+            viewModel.eliminarGrupo(grupoRequest)
         }
 
         btnSalirGrupo.setOnClickListener {
 
             val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
+            grupoRequest.idGrupo=idGrupo
             val idUsuario = SessionManager.usuario.idUsuario
 
             viewModel.desactivarUsuarioGrupo(idGrupo,idUsuario)

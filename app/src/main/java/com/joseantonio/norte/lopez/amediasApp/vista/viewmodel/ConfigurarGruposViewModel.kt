@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.UsuarioGrupoRepository
+import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import kotlinx.coroutines.launch
 
 class ConfigurarGruposViewModel(
@@ -21,10 +22,10 @@ class ConfigurarGruposViewModel(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    fun  eliminarGrupo(idGrupo : Int?) {
+    fun  eliminarGrupo(grupoRequest : GrupoRequest) {
         viewModelScope.launch {
             try {
-                val response = grupoRepository.eliminarGrupos(idGrupo)
+                val response = grupoRepository.desactivarGrupos(grupoRequest)
                 if (response.isSuccessful) {
                     _grupo.value = response.body()
                 } else {

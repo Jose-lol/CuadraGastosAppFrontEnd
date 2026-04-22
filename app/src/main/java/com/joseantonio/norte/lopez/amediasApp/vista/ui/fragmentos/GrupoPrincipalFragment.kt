@@ -14,6 +14,7 @@ import com.joseantonio.norte.lopez.amediasApp.R
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.ui.adapter.GrupoAdapter
@@ -56,7 +57,7 @@ class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
 
         viewModel.error.observe(viewLifecycleOwner) { msg ->
             msg?.let {
-                Toast.makeText(requireContext(), "Credenciales incorrectas o error de conexión", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "ERROR: $msg", Toast.LENGTH_SHORT).show()
             }
         }
 

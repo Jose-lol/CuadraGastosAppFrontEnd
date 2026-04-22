@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface UsuarioGrupoApiService {
 
-    @PATCH("usuariogrupo/{idGrupo}/usuarios/{idUsuario}/desactivar")
+    @PATCH("/usuariogrupo/{idGrupo}/usuarios/{idUsuario}/desactivar")
     suspend fun desactivarUsuarioGrupo(@Path("idGrupo") idGrupo: Int?,
                                        @Path("idUsuario") idUsuario: Int): Response<Unit>
 }

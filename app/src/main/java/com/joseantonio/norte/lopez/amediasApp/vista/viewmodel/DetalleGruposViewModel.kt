@@ -17,18 +17,5 @@ class DetalleGruposViewModel  (private val repository: GrupoRepository) : ViewMo
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    fun crearGrupo(grupoRequest: GrupoRequest) {
-        viewModelScope.launch {
-            try {
-                val response = repository.guardarGrupos(grupoRequest)
-                if (response.isSuccessful) {
-                    _grupo.value = response.body()
-                } else {
-                    _error.value = "Credenciales incorrectas"
-                }
-            } catch (e: Exception) {
-                _error.value = "Error de conexión " + e.message.toString()
-            }
-        }
-    }
+
 }
