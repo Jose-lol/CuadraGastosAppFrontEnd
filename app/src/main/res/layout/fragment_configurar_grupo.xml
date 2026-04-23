@@ -96,28 +96,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAnadirAmigo"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="start|center_vertical"
-                    android:text="Añadir nuevo miembro"
-                    android:textColor="#5BC5A7"
-                    app:icon="@android:drawable/ic_menu_add"
-                    app:iconTint="#5BC5A7" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#EEEEEE" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMiembrosConfig"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:padding="8dp" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -136,6 +118,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#FFCDD2" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSalirGrupo"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -145,22 +132,6 @@
                     android:text="Salir del grupo"
                     android:textColor="#D32F2F"
                     app:icon="@android:drawable/ic_lock_power_off"
-                    app:iconTint="#D32F2F" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#FFCDD2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnEliminarGrupo"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="start|center_vertical"
-                    android:text="Eliminar grupo"
-                    android:textColor="#D32F2F"
-                    app:icon="@android:drawable/ic_menu_delete"
                     app:iconTint="#D32F2F" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

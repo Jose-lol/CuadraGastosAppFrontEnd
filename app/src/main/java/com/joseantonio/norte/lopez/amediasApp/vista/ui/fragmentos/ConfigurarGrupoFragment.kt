@@ -10,53 +10,44 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.joseantonio.norte.lopez.amediasApp.R
-import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.UsuarioGrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
-import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
-import com.joseantonio.norte.lopez.amediasApp.data.entity.Grupo
 import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
-import com.joseantonio.norte.lopez.amediasApp.vista.factory.ConfigurarGruposViewModelFactory
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.ConfigurarGruposViewModel
-import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.GrupoSharedViewModel
-import kotlinx.coroutines.launch
+import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.SharedViewModel
 import kotlin.getValue
 
 
 class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
 
-    private val sharedViewModel: GrupoSharedViewModel by activityViewModels()
+    lateinit var grupoRequest : GrupoRequest
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: ConfigurarGruposViewModel by viewModels {
-        ConfigurarGruposViewModelFactory(
-            GrupoRepository(requireContext().applicationContext),
-            UsuarioGrupoRepository(requireContext().applicationContext)
-        )
+        object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val repo = UsuarioGrupoRepository(requireContext().applicationContext)
+                return ConfigurarGruposViewModel(repo) as T
+            }
+        }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val btnAtras = view.findViewById<ImageButton>(R.id.btnAtras)
-        val btnEliminarGrupo = view.findViewById<Button>(R.id.btnEliminarGrupo)
         val btnSalirGrupo = view.findViewById<Button>(R.id.btnSalirGrupo)
 
-        btnEliminarGrupo.setOnClickListener {
-
-            val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
-
-            viewModel.eliminarGrupo(idGrupo)
-        }
+        grupoRequest = GrupoRequest()
 
         btnSalirGrupo.setOnClickListener {
 
             val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
-            val idUsuario = SessionManager.usuario.idUsuario
+            grupoRequest.idGrupo=idGrupo
+            grupoRequest.idUsuario = SessionManager.usuario.idUsuario
 
-            viewModel.desactivarUsuarioGrupo(idGrupo,idUsuario)
+            viewModel.desactivarUsuarioGrupo(grupoRequest)
         }
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->

@@ -5,10 +5,10 @@ import java.time.LocalDateTime
 
 data class Grupo (
 
-    var id: Int = 0,
+    var id: Int? = 0,
     val nombre: String? = "",
     val estado: String? = "",
     val activo: Boolean? = false,
+    val fechaInactividad: LocalDateTime? = null ,
     val fechaAlta: LocalDateTime ,
-    val miembros: List<UsuarioResponse>? = null,
     )

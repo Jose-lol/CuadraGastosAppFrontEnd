@@ -1,10 +1,13 @@
 package com.joseantonio.norte.lopez.amediasApp.data.network
 
+import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
 import com.joseantonio.norte.lopez.amediasApp.data.entity.Usuario
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface UsuarioApiService {
@@ -13,4 +16,7 @@ interface UsuarioApiService {
 
     @POST("/usuarios/login")
     suspend fun login(@Body login: Usuario): Response<UsuarioResponse>
+
+    @GET("/usuarios/cargar")
+    suspend fun cargarAmigos(@Query("idUsuario") idUsuario: Int): Response<Collection<UsuarioResponse>>
 }

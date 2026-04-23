@@ -10,15 +10,11 @@ import retrofit2.Response
 class GrupoRepository (requireContext: Context) {
     private val api = RetrofitClient.instanceGrupo
 
-    suspend fun cargarGrupos(idUsuario : Int): Response<Collection<GrupoResponse>> {
+    suspend fun cargarGrupos(idUsuario: Int): Response<Collection<GrupoResponse>> {
         return api.cargarGrupos(idUsuario)
     }
 
-    suspend fun guardarGrupos(idUsuario : Int, grupoRequest: GrupoRequest): Response<Unit> {
-        return api.guardarGrupos(idUsuario,grupoRequest)
-    }
-
-    suspend fun eliminarGrupos(idGrupo  : Int?): Response<Unit> {
-        return api.desactivarGrupo(idGrupo)
+    suspend fun guardarGrupos(grupoRequest: GrupoRequest): Response<Unit> {
+        return api.guardarGrupos(grupoRequest)
     }
 }

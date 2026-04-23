@@ -6,7 +6,7 @@ import com.joseantonio.norte.lopez.amediasApp.data.entity.Grupo
 data class GrupoResponse (
 
     @SerializedName("idGrupo")
-    val idGrupo: Int = 0,
+    val idGrupo: Int? = 0,
 
     @SerializedName("nombre")
     val nombre: String? = "",
