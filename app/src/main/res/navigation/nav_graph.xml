@@ -106,6 +106,9 @@
         <action
             android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_grupo_principal"
             app:destination="@id/fragmento_grupo_principal" />
+        <action
+            android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_anadir_amigo_a_grupo"
+            app:destination="@id/fragmento_anadir_amigo_a_grupo" />
     </fragment>
 
     <!-- Fragmento configuracion grupo-->
@@ -116,6 +119,17 @@
 
         <action
             android:id="@+id/action_fragmento_configurar_grupo_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
+    </fragment>
+
+    <!-- Fragmento anadir amigo a grupo-->
+    <fragment
+        android:id="@+id/fragmento_anadir_amigo_a_grupo"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.AnadirAmigoAGrupoFragment"
+        android:label="insertar_amigo_grupo">
+
+        <action
+            android:id="@+id/action_fragmento_anadir_amigo_a_grupo_to_fragmento_detalle_grupo"
             app:destination="@id/fragmento_detalle_grupo" />
     </fragment>
 

@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
-import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import kotlinx.coroutines.launch
 

@@ -14,18 +14,17 @@ import com.joseantonio.norte.lopez.amediasApp.R
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.ui.adapter.GrupoAdapter
 import kotlin.getValue
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.CargarGruposViewModel
-import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.GrupoSharedViewModel
+import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.SharedViewModel
 
 class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
 
 
-    private val sharedViewModel: GrupoSharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var grupoAdapter: GrupoAdapter
     private var listaGrupos = mutableListOf<GrupoResponse>()
 
@@ -74,6 +73,7 @@ class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
         grupoAdapter = GrupoAdapter(listaGrupos) { grupo ->
 
             sharedViewModel.seleccionarGrupo(grupo)
+
             findNavController().navigate(R.id.action_fragmento_grupo_principal_to_fragmento_detalle_grupo)
         }
 

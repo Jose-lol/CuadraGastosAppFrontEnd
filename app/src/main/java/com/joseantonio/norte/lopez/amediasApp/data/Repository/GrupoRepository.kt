@@ -17,8 +17,4 @@ class GrupoRepository (requireContext: Context) {
     suspend fun guardarGrupos(grupoRequest: GrupoRequest): Response<Unit> {
         return api.guardarGrupos(grupoRequest)
     }
-
-    suspend fun desactivarGrupos(grupoRequest: GrupoRequest): Response<Unit> {
-        return api.desactivarGrupo(grupoRequest)
-    }
 }

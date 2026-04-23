@@ -18,7 +18,4 @@ interface GrupoApiService {
     @POST("/grupo/guardar")
     suspend fun guardarGrupos(@Body grupoRequest : GrupoRequest): Response<Unit>
 
-    @PATCH("/grupo/desactivar")
-    suspend fun desactivarGrupo(@Body grupoRequest : GrupoRequest): Response<Unit>
-
 }

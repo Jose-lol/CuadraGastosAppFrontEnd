@@ -11,5 +11,6 @@ data class GrupoRequest(
     var activo: Boolean? = false,
     var fechaAlta: String? = null,
     var idUsuario: Int? = null,
+    var miembros: List<UsuarioResponse>? = null
 
 )

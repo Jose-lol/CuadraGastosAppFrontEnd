@@ -1,6 +1,7 @@
 package com.joseantonio.norte.lopez.amediasApp.data.Repository
 
 import android.content.Context
+import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
 import com.joseantonio.norte.lopez.amediasApp.data.entity.Usuario
 import com.joseantonio.norte.lopez.amediasApp.data.network.RetrofitClient
@@ -17,5 +18,9 @@ class UsuarioRepository(requireContext: Context) {
 
     suspend fun login(email: String, pass: String): Response<UsuarioResponse> {
         return api.login(Usuario(email = email, contrasena = pass))
+    }
+
+    suspend fun cargarAmigos(idUsuario: Int): Response<Collection<UsuarioResponse>> {
+        return api.cargarAmigos(idUsuario)
     }
 }
