@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.joseantonio.norte.lopez.amediasApp.R
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.UsuarioGrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
-import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
+import com.joseantonio.norte.lopez.amediasApp.data.local.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.ConfigurarGruposViewModel
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.SharedViewModel
 import kotlin.getValue
@@ -23,6 +23,9 @@ import kotlin.getValue
 class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
 
     lateinit var grupoRequest : GrupoRequest
+
+    lateinit var sessionManager: SessionManager
+
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: ConfigurarGruposViewModel by viewModels {
         object : ViewModelProvider.Factory{
@@ -43,11 +46,19 @@ class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
 
         btnSalirGrupo.setOnClickListener {
 
-            val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
-            grupoRequest.idGrupo=idGrupo
-            grupoRequest.idUsuario = SessionManager.usuario.idUsuario
+            sessionManager = SessionManager(requireContext())
+            val idUsuario = sessionManager.getIdUsuario()
 
-            viewModel.desactivarUsuarioGrupo(grupoRequest)
+            if(idUsuario != -1 ){
+                grupoRequest.idUsuario = idUsuario
+                val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
+                grupoRequest.idGrupo=idGrupo
+                viewModel.desactivarUsuarioGrupo(grupoRequest)
+            }else{
+                Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
+            }
+
+
         }
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->
@@ -57,6 +68,8 @@ class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
                     "grupo eliminado correctamente",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                findNavController().navigate(R.id.action_fragmento_configurar_grupo_to_fragmento_grupo_principal)
             }
         }
 

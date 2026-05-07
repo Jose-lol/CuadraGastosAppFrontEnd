@@ -16,8 +16,7 @@ import com.joseantonio.norte.lopez.amediasApp.R
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
-import com.joseantonio.norte.lopez.amediasApp.data.entity.Grupo
-import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
+import com.joseantonio.norte.lopez.amediasApp.data.local.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.CrearGruposViewModel
 import java.time.Clock
 import java.time.LocalDateTime
@@ -29,6 +28,7 @@ import kotlin.getValue
 class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
     lateinit var usuario : UsuarioResponse
+    lateinit var sessionManager: SessionManager
     private val viewModel: CrearGruposViewModel by viewModels {
         object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -51,23 +51,26 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
         val clock=Clock.systemUTC()
 
-        btnCrearGrupo.setOnClickListener {
+        sessionManager = SessionManager(requireContext())
+        val idUsuario = sessionManager.getIdUsuario()
 
-            var nombre = txtNombreGrupo.text.toString()
-            var estado = "Sin gasto"
-            var activo = true
-            var fechaAlta = LocalDateTime.now(clock)
-                .truncatedTo(ChronoUnit.SECONDS)
-                .toString()
+        if(idUsuario != -1 ) {
+            btnCrearGrupo.setOnClickListener {
 
-            val grupoRequest = GrupoRequest(null
-                ,nombre
-                ,estado
-                ,activo
-                ,fechaAlta
-                ,SessionManager.usuario.idUsuario
-            )
-            viewModel.crearGrupo(grupoRequest)
+                var nombre = txtNombreGrupo.text.toString()
+                var estado = "Sin gasto"
+                var activo = true
+                var fechaAlta = LocalDateTime.now(clock)
+                    .truncatedTo(ChronoUnit.SECONDS)
+                    .toString()
+
+                val grupoRequest = GrupoRequest(
+                    null, nombre, estado, activo, fechaAlta, idUsuario
+                )
+                viewModel.crearGrupo(grupoRequest)
+            }
+        }else{
+            Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
         }
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->
@@ -77,6 +80,7 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
                     "grupo creado correctamente",
                     Toast.LENGTH_SHORT
                 ).show()
+                findNavController().navigate(R.id.action_fragmento_crear_grupo_to_fragmento_grupo_principal)
             }
         }
 

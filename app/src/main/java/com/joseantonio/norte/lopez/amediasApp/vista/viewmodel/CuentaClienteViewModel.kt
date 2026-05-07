@@ -1,6 +1,5 @@
 package com.joseantonio.norte.lopez.amediasApp.vista.viewmodel
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,33 +9,23 @@ import com.joseantonio.norte.lopez.amediasApp.data.dto.response.JwtResponse
 import com.joseantonio.norte.lopez.amediasApp.data.local.SessionManager
 import kotlinx.coroutines.launch
 
-class LoginClienteViewModel(private val repository: UsuarioRepository,private val sessionManager: SessionManager) : ViewModel() {
-
-    private val _usuario = MutableLiveData<JwtResponse?>()
-    val usuario: LiveData<JwtResponse?> = _usuario
+class CuentaClienteViewModel(private val repository: UsuarioRepository, private val sessionManager: SessionManager): ViewModel()  {
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
+    fun logout(token: String?) {
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    fun login(email: String, contrasena: String) {
         viewModelScope.launch {
-            _isLoading.value = true
             _error.value = null
-
             try {
-                val response = repository.login(email, contrasena)
-
+                val response = repository.logout(token)
                 if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body != null) {
-                        sessionManager.saveSession(body.accessToken, body.refreshToken, body.idUsuario)
-                        _usuario.value=response.body()
-                    }
+                    sessionManager.clearSession()
                 } else {
+                    //si falla backend limpiamos sesión igual
+                    sessionManager.clearSession()
+
                     _error.value = when (response.code()) {
 
                         400 -> "Solicitud incorrecta"
@@ -60,12 +49,13 @@ class LoginClienteViewModel(private val repository: UsuarioRepository,private va
                         else -> "Error inesperado: ${response.code()}"
                     }
                 }
+
             } catch (e: Exception) {
+
+                sessionManager.clearSession()
                 _error.value = "No se pudo conectar con el servidor."
-            } finally {
-                _isLoading.value = false
+
             }
         }
     }
 }
-

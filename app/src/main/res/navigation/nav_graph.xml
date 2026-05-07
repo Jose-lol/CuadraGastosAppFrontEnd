@@ -59,27 +59,46 @@
         android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.PerfilFragment"
         android:label="Perfil">
 
-        <!-- Acción desde Perfil hacia menu -->
-        <action
-            android:id="@+id/action_fragmento_perfil_to_fragmento_menu"
-            app:destination="@id/fragmento_grupo_principal" />
-
         <!-- Acción desde Perfil a Modificar Perfil -->
         <action
             android:id="@+id/action_fragmento_perfil_to_fragmento_modificar_perfil"
             app:destination="@id/fragmento_modificar_perfil" />
+        <action
+            android:id="@+id/action_fragmento_perfil_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
+
     </fragment>
 
+    <!-- Fragmento cuenta Cliente -->
+    <fragment
+        android:id="@+id/fragmento_cuenta_cliente"
+        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.CuentaClienteFragment"
+        android:label="cuenta_cliente">
+
+        <action
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_login"
+            app:destination="@id/fragmento_login" />
+        <action
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
+        <action
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
+        <action
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_perfil"
+            app:destination="@id/fragmento_perfil" />
+
+    </fragment>
     <!-- Fragmento Modificar Perfil -->
     <fragment
         android:id="@+id/fragmento_modificar_perfil"
         android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.ModificarPerfilFragment"
         android:label="modificar_perfil">
 
-        <!-- Acción para volver a Perfil -->
         <action
-            android:id="@+id/action_fragmento_modificar_perfil_to_fragmento_perfil"
-            app:destination="@id/fragmento_perfil" />
+            android:id="@+id/action_fragmento_modificar_perfil_to_fragmento_cuenta_cliente"
+            app:destination="@id/fragmento_cuenta_cliente" />
+
     </fragment>
 
     <!-- Fragmento crear grupo-->
@@ -120,6 +139,9 @@
         <action
             android:id="@+id/action_fragmento_configurar_grupo_to_fragmento_detalle_grupo"
             app:destination="@id/fragmento_detalle_grupo" />
+        <action
+            android:id="@+id/action_fragmento_configurar_grupo_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
     </fragment>
 
     <!-- Fragmento anadir amigo a grupo-->

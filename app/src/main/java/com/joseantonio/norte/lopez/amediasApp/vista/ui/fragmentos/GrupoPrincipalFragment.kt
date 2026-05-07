@@ -15,7 +15,7 @@ import com.joseantonio.norte.lopez.amediasApp.data.Repository.GrupoRepository
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.GrupoResponse
-import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
+import com.joseantonio.norte.lopez.amediasApp.data.local.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.ui.adapter.GrupoAdapter
 import kotlin.getValue
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.CargarGruposViewModel
@@ -27,6 +27,8 @@ class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var grupoAdapter: GrupoAdapter
     private var listaGrupos = mutableListOf<GrupoResponse>()
+
+    private lateinit var sessionManager: SessionManager
 
     private val viewModel: CargarGruposViewModel by viewModels {
         object : ViewModelProvider.Factory{
@@ -44,7 +46,16 @@ class GrupoPrincipalFragment : Fragment(R.layout.fragment_grupo_principal) {
 
         setupRecyclerView(view)
 
-        viewModel.cargarGrupos(SessionManager.usuario.idUsuario)
+        sessionManager = SessionManager(requireContext())
+
+        val idUsuario = sessionManager.getIdUsuario()
+
+        if(idUsuario != -1) {
+            viewModel.cargarGrupos(idUsuario)
+        }else{
+            Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
+        }
+
 
         viewModel.grupo.observe(viewLifecycleOwner) { grupos ->
             grupos?.let {

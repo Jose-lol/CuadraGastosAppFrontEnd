@@ -25,7 +25,28 @@ class CrearGruposViewModel (private val repository: GrupoRepository) : ViewModel
                 if (response.isSuccessful) {
                     _grupo.value = response.body()
                 } else {
-                    _error.value = "ERROR: "+response.body().toString()
+                    _error.value = when (response.code()) {
+
+                        400 -> "Solicitud incorrecta"
+
+                        401 -> "Sesión expirada. Vuelve a iniciar sesión"
+
+                        403 -> "No tienes permisos para acceder"
+
+                        404 -> "No se encontraron grupos"
+
+                        408 -> "Tiempo de espera agotado"
+
+                        429 -> "Demasiadas solicitudes. Inténtalo más tarde"
+
+                        500 -> "Error interno del servidor"
+
+                        502 -> "Servidor no disponible"
+
+                        503 -> "Servicio temporalmente fuera de servicio"
+
+                        else -> "Error inesperado: ${response.code()}"
+                    }
                 }
             } catch (e: Exception) {
                 _error.value = "Error de conexión "+e.message.toString()
