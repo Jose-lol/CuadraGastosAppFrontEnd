@@ -6,15 +6,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.joseantonio.norte.lopez.amediasApp.R
-import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
-import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.UpdateClienteViewModel
+
 
 class PerfilFragment : Fragment(R.layout.fragment_perfil) {
-
-    private lateinit var viewModel: UpdateClienteViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

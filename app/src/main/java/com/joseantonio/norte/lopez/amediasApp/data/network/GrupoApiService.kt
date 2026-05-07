@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface GrupoApiService {
 
     @GET("/grupo/cargar")
-    suspend fun cargarGrupos(@Query("idUsuario") idUsuario: Int): Response<Collection<GrupoResponse>>
+    suspend fun cargarGrupos(@Query("idUsuario") idUsuario: Int?): Response<Collection<GrupoResponse>>
 
     @POST("/grupo/guardar")
     suspend fun guardarGrupos(@Body grupoRequest : GrupoRequest): Response<Unit>

@@ -18,5 +18,5 @@ interface UsuarioApiService {
     suspend fun login(@Body login: Usuario): Response<UsuarioResponse>
 
     @GET("/usuarios/cargar")
-    suspend fun cargarAmigos(@Query("idUsuario") idUsuario: Int): Response<Collection<UsuarioResponse>>
+    suspend fun cargarAmigos(@Query("idUsuario") idUsuario: Int?): Response<Collection<UsuarioResponse>>
 }

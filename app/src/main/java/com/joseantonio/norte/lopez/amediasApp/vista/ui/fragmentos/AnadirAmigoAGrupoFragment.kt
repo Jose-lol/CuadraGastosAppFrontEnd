@@ -19,17 +19,20 @@ import com.joseantonio.norte.lopez.amediasApp.data.Repository.UsuarioGrupoReposi
 import com.joseantonio.norte.lopez.amediasApp.data.Repository.UsuarioRepository
 import com.joseantonio.norte.lopez.amediasApp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.amediasApp.data.dto.response.UsuarioResponse
-import com.joseantonio.norte.lopez.amediasApp.session.SessionManager
+import com.joseantonio.norte.lopez.amediasApp.data.local.SessionManager
 import com.joseantonio.norte.lopez.amediasApp.vista.ui.adapter.AmigosAdapter
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.AnadirAmigoAGrupoViewModel
 import com.joseantonio.norte.lopez.amediasApp.vista.viewmodel.SharedViewModel
 import kotlin.getValue
+
 
 class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grupo) {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     lateinit var grupoRequest: GrupoRequest
+
+    lateinit var sessionManager: SessionManager
 
     private lateinit var amigosAdapter: AmigosAdapter
 
@@ -51,6 +54,7 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
         var searchViewAmigos = view.findViewById<androidx.appcompat.widget.SearchView>(R.id.searchViewAmigos)
         val rvMisAmigos = view.findViewById<RecyclerView>(R.id.rvMisAmigos)
 
+
         amigosAdapter = AmigosAdapter { cantidad ->
             if (cantidad > 0) {
                 btnFinalizar.isEnabled = true
@@ -61,12 +65,18 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
             }
         }
 
+        sessionManager = SessionManager(requireContext())
         grupoRequest = GrupoRequest()
+
+        val idUsuario = sessionManager.getIdUsuario()
 
         rvMisAmigos.layoutManager = LinearLayoutManager(requireContext())
         rvMisAmigos.adapter = amigosAdapter
-
-        viewModel.cargarAmigos(SessionManager.usuario.idUsuario)
+        if(idUsuario != -1 ){
+             viewModel.cargarAmigos(idUsuario)
+        }else{
+            Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.listaAmigos.observe(viewLifecycleOwner) { amigos ->
             amigosAdapter.actualizarLista(amigos.toList())
