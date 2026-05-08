@@ -5,13 +5,10 @@
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_home</item>
 
-        <!-- ESTA LÍNEA ES CRUCIAL: Debe ser tu tema normal de la app -->
         <item name="postSplashScreenTheme">@style/Theme.TuProyectoMaterial3</item>
     </style>
 
-    <!-- Tu tema principal debe ser Material -->
     <style name="Theme.TuProyectoMaterial3" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- ... tus colores ... -->
-    </style>
 
+    </style>
 </resources>
