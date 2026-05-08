@@ -20,4 +20,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="nombre_fido">Nombre: Fido</string>
     <string name="tipo_perro">Tipo: Perro</string>
+    <string name="google_client_id">645890278928-jlj9hah959nglpfshmtgknkicauqojsm.apps.googleusercontent.com</string>
 </resources>
