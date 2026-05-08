@@ -8,7 +8,7 @@
     <!-- Fragmento de Login -->
     <fragment
         android:id="@+id/fragmento_login"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.LoginFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.LoginFragment"
         android:label="Login" >
 
         <!-- Acción para ir al fragmento de Registro -->
@@ -25,7 +25,7 @@
     <!-- Fragmento de Registro -->
     <fragment
         android:id="@+id/fragmento_registro"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.RegistroFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.RegistroFragment"
         android:label="Registro">
 
         <!-- Acción para volver al Login -->
@@ -37,7 +37,7 @@
     <!-- Fragmento de lista de grupos -->
     <fragment
         android:id="@+id/fragmento_grupo_principal"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.GrupoPrincipalFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.GrupoPrincipalFragment"
         android:label="grupo_principal">
 
         <action
@@ -56,7 +56,7 @@
     <!-- Fragmento Perfil -->
     <fragment
         android:id="@+id/fragmento_perfil"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.PerfilFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.PerfilFragment"
         android:label="Perfil">
 
         <!-- Acción desde Perfil a Modificar Perfil -->
@@ -72,7 +72,7 @@
     <!-- Fragmento cuenta Cliente -->
     <fragment
         android:id="@+id/fragmento_cuenta_cliente"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.CuentaClienteFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.CuentaClienteFragment"
         android:label="cuenta_cliente">
 
         <action
@@ -92,7 +92,7 @@
     <!-- Fragmento Modificar Perfil -->
     <fragment
         android:id="@+id/fragmento_modificar_perfil"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.ModificarPerfilFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.ModificarPerfilFragment"
         android:label="modificar_perfil">
 
         <action
@@ -104,7 +104,7 @@
     <!-- Fragmento crear grupo-->
     <fragment
         android:id="@+id/fragmento_crear_grupo"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.CrearGrupoFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.CrearGrupoFragment"
         android:label="crear_grupo">
 
         <!-- Acción para volver a grupos -->
@@ -116,7 +116,7 @@
     <!-- Fragmento detalle  grupo-->
     <fragment
         android:id="@+id/fragmento_detalle_grupo"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.DetalleGrupoFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.DetalleGrupoFragment"
         android:label="detalle_grupo">
 
         <action
@@ -133,7 +133,7 @@
     <!-- Fragmento configuracion grupo-->
     <fragment
         android:id="@+id/fragmento_configurar_grupo"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.ConfigurarGrupoFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.ConfigurarGrupoFragment"
         android:label="configurar_grupo">
 
         <action
@@ -147,7 +147,7 @@
     <!-- Fragmento anadir amigo a grupo-->
     <fragment
         android:id="@+id/fragmento_anadir_amigo_a_grupo"
-        android:name="com.joseantonio.norte.lopez.amediasApp.vista.ui.fragmentos.AnadirAmigoAGrupoFragment"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.AnadirAmigoAGrupoFragment"
         android:label="insertar_amigo_grupo">
 
         <action

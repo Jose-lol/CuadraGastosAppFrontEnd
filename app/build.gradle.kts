@@ -5,17 +5,18 @@ plugins {
 }
 
 android {
-    namespace = "com.joseantonio.norte.lopez.amediasApp"
+    namespace = "com.joseantonio.norte.lopez.cuadragastosapp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.joseantonio.norte.lopez.amediasApp"
+        applicationId = "com.joseantonio.norte.lopez.cuadragastosapp"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -59,6 +60,7 @@ dependencies {
     implementation(libs.androidx.gridlayout)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,4 +73,8 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.credentials:credentials:1.2.2")
+    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
 }
