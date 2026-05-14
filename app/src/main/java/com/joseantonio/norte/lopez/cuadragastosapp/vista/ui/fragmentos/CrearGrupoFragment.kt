@@ -57,14 +57,9 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
             btnCrearGrupo.setOnClickListener {
 
                 var nombre = txtNombreGrupo.text.toString()
-                var estado = "Sin gasto"
-                var activo = true
-                var fechaAlta = LocalDateTime.now(clock)
-                    .truncatedTo(ChronoUnit.SECONDS)
-                    .toString()
 
                 val grupoRequest = GrupoRequest(
-                    null, nombre, estado, activo, fechaAlta, idUsuario
+                    null, nombre
                 )
                 viewModel.crearGrupo(grupoRequest)
             }

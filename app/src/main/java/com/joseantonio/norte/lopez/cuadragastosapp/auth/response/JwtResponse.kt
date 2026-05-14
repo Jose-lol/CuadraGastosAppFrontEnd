@@ -7,8 +7,16 @@ class JwtResponse {
     val accessToken: String? = null
     @SerializedName("refreshToken")
     val refreshToken: String? = null
+
     @SerializedName("email")
     val email: String? = null
+
+    @SerializedName("telefono")
+    val telefono: String? = null
+
+    @SerializedName("nombre")
+    val nombre: String? = null
+
     @SerializedName("idUsuario")
     val idUsuario: Int? = null
 }

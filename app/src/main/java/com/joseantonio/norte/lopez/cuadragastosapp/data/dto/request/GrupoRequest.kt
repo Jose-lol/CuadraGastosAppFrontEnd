@@ -5,10 +5,4 @@ import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioResp
 data class GrupoRequest(
     var idGrupo: Int? = null,
     var nombre: String? = "",
-    var estado: String? = "",
-    var activo: Boolean? = false,
-    var fechaAlta: String? = null,
-    var idUsuario: Int? = null,
-    var miembros: List<UsuarioResponse>? = null
-
 )

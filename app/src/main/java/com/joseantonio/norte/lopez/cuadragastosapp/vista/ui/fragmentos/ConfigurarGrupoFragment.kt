@@ -50,7 +50,6 @@ class ConfigurarGrupoFragment : Fragment(R.layout.fragment_configurar_grupo) {
             val idUsuario = sessionManager.getIdUsuario()
 
             if(idUsuario != -1 ){
-                grupoRequest.idUsuario = idUsuario
                 val idGrupo = sharedViewModel.grupoSeleccionado.value?.idGrupo
                 grupoRequest.idGrupo=idGrupo
                 viewModel.desactivarUsuarioGrupo(grupoRequest)

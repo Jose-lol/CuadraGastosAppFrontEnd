@@ -20,6 +20,10 @@
         <action
             android:id="@+id/action_fragmento_login_to_fragmento_grupo_principal"
             app:destination="@id/fragmento_grupo_principal" />
+        <!-- Acción para ir al fragmento completar perfil -->
+        <action
+            android:id="@+id/action_fragmento_login_to_fragmento_completar_perfil"
+            app:destination="@id/fragmento_completar_perfil" />
     </fragment>
 
     <!-- Fragmento de Registro -->
@@ -53,18 +57,17 @@
             app:destination="@id/fragmento_login" />
     </fragment>
 
-    <!-- Fragmento Perfil -->
+    <!-- Fragmento Contactos -->
     <fragment
-        android:id="@+id/fragmento_perfil"
-        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.PerfilFragment"
-        android:label="Perfil">
+        android:id="@+id/fragmento_contactos"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.ContactosFragment"
+        android:label="contactos">
 
-        <!-- Acción desde Perfil a Modificar Perfil -->
         <action
-            android:id="@+id/action_fragmento_perfil_to_fragmento_modificar_perfil"
+            android:id="@+id/action_fragmento_contactos_to_fragmento_modificar_perfil"
             app:destination="@id/fragmento_modificar_perfil" />
         <action
-            android:id="@+id/action_fragmento_perfil_to_fragmento_grupo_principal"
+            android:id="@+id/action_fragmento_contactos_to_fragmento_grupo_principal"
             app:destination="@id/fragmento_grupo_principal" />
 
     </fragment>
@@ -85,8 +88,8 @@
             android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_grupo_principal"
             app:destination="@id/fragmento_grupo_principal" />
         <action
-            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_perfil"
-            app:destination="@id/fragmento_perfil" />
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_contactos"
+            app:destination="@id/fragmento_contactos" />
 
     </fragment>
     <!-- Fragmento Modificar Perfil -->
@@ -153,6 +156,17 @@
         <action
             android:id="@+id/action_fragmento_anadir_amigo_a_grupo_to_fragmento_detalle_grupo"
             app:destination="@id/fragmento_detalle_grupo" />
+    </fragment>
+
+    <!-- Fragmento completar perfil-->
+    <fragment
+        android:id="@+id/fragmento_completar_perfil"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.CompletarPerfilFragment"
+        android:label="completar_perfil">
+
+        <action
+            android:id="@+id/action_fragmento_completar_perfil_to_fragmento_grupo_principal"
+            app:destination="@id/fragmento_grupo_principal" />
     </fragment>
 
 </navigation>

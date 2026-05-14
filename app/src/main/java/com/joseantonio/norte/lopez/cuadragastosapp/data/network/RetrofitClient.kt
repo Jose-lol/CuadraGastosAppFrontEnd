@@ -35,7 +35,7 @@ object RetrofitClient {
                 .authenticator(
                     TokenAuthenticator(
                         sessionManager,
-                        { authApi }, // OK ahora
+                        { authApiService },
                         tokenHolder
                     )
                 )
@@ -50,12 +50,12 @@ object RetrofitClient {
     }
 
     //IMPORTANTE: authApi fuera del mismo ciclo crítico
-    val authApi: AuthApi by lazy {
+    val authApiService: AuthApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(AuthApi::class.java)
+            .create(AuthApiService::class.java)
     }
 
     private fun <T> createService(serviceClass: Class<T>): T {
@@ -74,4 +74,8 @@ object RetrofitClient {
     val instanceUsuarioGrupo: UsuarioGrupoApiService by lazy {
         createService(UsuarioGrupoApiService::class.java)
     }
+    val instanceContacto: ContactoApiService by lazy {
+        createService(ContactoApiService::class.java)
+    }
+
 }

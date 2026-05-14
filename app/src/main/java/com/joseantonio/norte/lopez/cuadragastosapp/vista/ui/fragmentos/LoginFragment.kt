@@ -72,8 +72,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             userResponse?.let {
 
                 Toast.makeText(requireContext(), "Bienvenido, ${it.email}", Toast.LENGTH_SHORT).show()
-
-                findNavController().navigate(R.id.action_fragmento_login_to_fragmento_grupo_principal)
+                if(it.nombre == null || it.nombre.isEmpty() || it.telefono ==  null || it.telefono.isEmpty()){
+                    findNavController().navigate(R.id.action_fragmento_login_to_fragmento_completar_perfil)
+                }else{
+                    findNavController().navigate(R.id.action_fragmento_login_to_fragmento_grupo_principal)
+                }
             }
         }
 
