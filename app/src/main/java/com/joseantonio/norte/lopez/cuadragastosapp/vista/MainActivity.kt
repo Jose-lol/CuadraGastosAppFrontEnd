@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         return try {
 
-            val response = RetrofitClient.authApi.refrescarToken(
+            val response = RetrofitClient.authApiService.refrescarToken(
                 TokenRefreshRequest(refreshToken)
             )
 

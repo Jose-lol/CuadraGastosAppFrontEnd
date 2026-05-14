@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.ContactoRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioGrupoRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GrupoRequest
@@ -12,7 +13,7 @@ import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioResp
 import kotlinx.coroutines.launch
 
 
-class AnadirAmigoAGrupoViewModel(private val repositoryUsuarioGrupo: UsuarioGrupoRepository,private val repositoryUsuario: UsuarioRepository) : ViewModel() {
+class AnadirAmigoAGrupoViewModel(private val repositoryUsuarioGrupo: UsuarioGrupoRepository,private val repositoryContacto: ContactoRepository) : ViewModel() {
 
     private val _resultado = MutableLiveData<String>()
     val resultado: LiveData<String> get() = _resultado
@@ -31,8 +32,28 @@ class AnadirAmigoAGrupoViewModel(private val repositoryUsuarioGrupo: UsuarioGrup
                 if (response.isSuccessful) {
                     _resultado.value = "Éxito: Usuario añadido al grupo con exito"
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    _error.value = "Error: $errorMsg"
+                    _error.value = when (response.code()) {
+
+                        400 -> "Solicitud incorrecta"
+
+                        401 -> "Sesión expirada. Vuelve a iniciar sesión"
+
+                        403 -> "No tienes permisos para acceder"
+
+                        404 -> "No se encontraron grupos"
+
+                        408 -> "Tiempo de espera agotado"
+
+                        429 -> "Demasiadas solicitudes. Inténtalo más tarde"
+
+                        500 -> "Error interno del servidor"
+
+                        502 -> "Servidor no disponible"
+
+                        503 -> "Servicio temporalmente fuera de servicio"
+
+                        else -> "Error inesperado: ${response.code()}"
+                    }
                 }
             } catch (e: Exception) {
                 _error.value = "Error de red: ${e.localizedMessage}"
@@ -40,10 +61,10 @@ class AnadirAmigoAGrupoViewModel(private val repositoryUsuarioGrupo: UsuarioGrup
         }
     }
 
-    fun cargarAmigos(idUsuario: Int?) {
+    fun cargarAmigos() {
         viewModelScope.launch {
             try {
-                val response = repositoryUsuario.cargarAmigos(idUsuario)
+                val response = repositoryContacto.cargarContactos()
 
                 if (response.isSuccessful) {
                     _listaAmigos.value =response.body()

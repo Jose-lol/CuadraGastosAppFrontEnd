@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.joseantonio.norte.lopez.cuadragastosapp.R
+import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.ContactoRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioGrupoRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GrupoRequest
@@ -31,15 +32,13 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
 
     lateinit var grupoRequest: GrupoRequest
 
-    lateinit var sessionManager: SessionManager
-
     private lateinit var amigosAdapter: AmigosAdapter
 
     private val viewModel: AnadirAmigoAGrupoViewModel by viewModels {
         object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val repo1 = UsuarioGrupoRepository(requireContext().applicationContext)
-                val repo2 = UsuarioRepository(requireContext().applicationContext)
+                val repo2 = ContactoRepository(requireContext().applicationContext)
                 return AnadirAmigoAGrupoViewModel(repo1,repo2) as T
             }
         }
@@ -64,18 +63,12 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
             }
         }
 
-        sessionManager = SessionManager(requireContext())
         grupoRequest = GrupoRequest()
-
-        val idUsuario = sessionManager.getIdUsuario()
 
         rvMisAmigos.layoutManager = LinearLayoutManager(requireContext())
         rvMisAmigos.adapter = amigosAdapter
-        if(idUsuario != -1 ){
-             viewModel.cargarAmigos(idUsuario)
-        }else{
-            Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
-        }
+
+        viewModel.cargarAmigos()
 
         viewModel.listaAmigos.observe(viewLifecycleOwner) { amigos ->
             amigosAdapter.actualizarLista(amigos.toList())
@@ -87,11 +80,6 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
             val seleccionados = amigosAdapter.getIdsSeleccionados()
 
             if (seleccionados.isNotEmpty()) {
-
-                val listaMiembros = seleccionados.map { id ->
-                    UsuarioResponse(idUsuario = id)
-                }
-                grupoRequest.miembros = listaMiembros
 
                 viewModel.anadirAmigoAGrupo(grupoRequest)
 

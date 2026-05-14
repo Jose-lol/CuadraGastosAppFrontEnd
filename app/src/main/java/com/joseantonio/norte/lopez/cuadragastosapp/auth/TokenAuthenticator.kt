@@ -3,7 +3,7 @@ package com.joseantonio.norte.lopez.cuadragastosapp.auth
 import android.util.Log
 import com.joseantonio.norte.lopez.cuadragastosapp.auth.request.TokenRefreshRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.local.SessionManager
-import com.joseantonio.norte.lopez.cuadragastosapp.data.network.AuthApi
+import com.joseantonio.norte.lopez.cuadragastosapp.data.network.AuthApiService
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -12,7 +12,7 @@ import okhttp3.Route
 
 class TokenAuthenticator(
     private val sessionManager: SessionManager,
-    private val apiProvider: () -> AuthApi,
+    private val apiProvider: () -> AuthApiService,
     private val tokenHolder: TokenHolder
 ) : Authenticator {
 

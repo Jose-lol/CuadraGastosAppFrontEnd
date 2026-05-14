@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class AuthRepository(requireContext: Context) {
 
-    private val authApi = RetrofitClient.authApi
+    private val authApi = RetrofitClient.authApiService
 
     suspend fun registrar(email: String, pass: String): Response<UsuarioResponse?> {
         return authApi.registrarUsuario(RegistroRequest(email = email, contrasena = pass))
