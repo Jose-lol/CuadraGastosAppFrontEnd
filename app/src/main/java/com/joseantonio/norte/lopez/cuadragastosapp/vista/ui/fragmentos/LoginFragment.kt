@@ -27,7 +27,6 @@ import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GoogleLoginR
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private lateinit var credentialManager: CredentialManager
     private lateinit var sessionManager: SessionManager
     private val viewModel: LoginClienteViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -71,8 +70,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel.usuario.observe(viewLifecycleOwner) { userResponse ->
             userResponse?.let {
 
-                Toast.makeText(requireContext(), "Bienvenido, ${it.email}", Toast.LENGTH_SHORT).show()
-                if(it.nombre == null || it.nombre.isEmpty() || it.telefono ==  null || it.telefono.isEmpty()){
+                Toast.makeText(requireContext(), "Bienvenido, ${it.usuario?.email}", Toast.LENGTH_SHORT).show()
+                if(it.usuario?.nombre == null || it.usuario.nombre.isEmpty() || it.usuario.telefono ==  null || it.usuario.telefono.isEmpty()){
                     findNavController().navigate(R.id.action_fragmento_login_to_fragmento_completar_perfil)
                 }else{
                     findNavController().navigate(R.id.action_fragmento_login_to_fragmento_grupo_principal)

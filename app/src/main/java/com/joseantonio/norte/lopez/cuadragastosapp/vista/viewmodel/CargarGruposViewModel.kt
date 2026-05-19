@@ -4,26 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.GrupoRepository
-import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.GrupoResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioGrupoRepository
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioGrupoResponse
 import kotlinx.coroutines.launch
 
-class CargarGruposViewModel (private val repository: GrupoRepository) : ViewModel() {
+class CargarGruposViewModel (private val repository: UsuarioGrupoRepository) : ViewModel() {
 
     // Para los datos del grupo
-    private val _grupo = MutableLiveData<Collection<GrupoResponse>>()
-    val grupo : LiveData<Collection<GrupoResponse>> = _grupo
+    private val _usuarioGrupo = MutableLiveData<Collection<UsuarioGrupoResponse>>()
+    val usuarioGrupo : LiveData<Collection<UsuarioGrupoResponse>> = _usuarioGrupo
 
     // Para mensajes de error
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    fun cargarGrupos(idUsuario: Int?) {
+    fun cargarMisGrupos() {
         viewModelScope.launch {
             try {
-                val response = repository.cargarGrupos(idUsuario)
+                val response = repository.cargarMisGrupos()
                 if (response.isSuccessful) {
-                    _grupo.value = response.body()
+                    _usuarioGrupo.value = response.body()
                 } else {
                     _error.value = when (response.code()) {
 

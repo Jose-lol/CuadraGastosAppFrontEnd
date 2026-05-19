@@ -6,23 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragmento_anadir_amigo_a_grupo"
-    android:background="#F8F9FA"
+    android:background="#000000"
     tools:context=".vista.ui.fragmentos.AnadirAmigoAGrupoFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/headerBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="4dp"
+        app:cardElevation="8dp"
         app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="#121212"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:background="@color/white">
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@android:drawable/ic_menu_revert"
-                    app:tint="@color/black"
+                    app:tint="#5BC5A7"
                     android:layout_marginEnd="8dp" />
 
                 <TextView
@@ -47,17 +47,20 @@
                     android:text="Añadir al grupo"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchViewAmigos"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:background="#1A1A1A"
                 app:iconifiedByDefault="false"
                 app:queryHint="Busca por nombre o email..."
                 app:queryBackground="@android:color/transparent"
-                app:searchIcon="@android:drawable/ic_menu_search" />
+                app:searchIcon="@android:drawable/ic_menu_search"
+                app:searchHintIcon="@null"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -67,6 +70,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="8dp"
+        android:background="#000000"
         app:layout_constraintBottom_toTopOf="@id/containerBoton"
         app:layout_constraintTop_toBottomOf="@id/headerBar" />
 
@@ -74,21 +78,24 @@
         android:id="@+id/containerBoton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#121212"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnFinalizar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:text="Confirmar miembros"
             android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:backgroundTint="#5BC5A7"
-            app:cornerRadius="12dp"
-            app:elevation="4dp" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:elevation="4dp"
+            android:checkable="true"
+            app:backgroundTint="@color/selector_background_toggle"
+            android:textColor="@color/selector_text_toggle" />
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
         android:id="@+id/fragmento_contactos" android:icon="@drawable/ic_profile"
         android:title="Amigos" />
     <item
-        android:id="@+id/fragmento_detalle_grupo" android:icon="@drawable/ic_home"
+        android:id="@+id/fragmento_detalle_grupo" android:icon="@drawable/ic_phone"
         android:title="Actividad" />
     <item
         android:id="@+id/fragmento_cuenta_cliente" android:icon="@drawable/ic_actividad"

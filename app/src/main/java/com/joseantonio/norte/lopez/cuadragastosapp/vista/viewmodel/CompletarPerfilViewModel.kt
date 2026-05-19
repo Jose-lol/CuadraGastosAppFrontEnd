@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.UsuarioRepository
-import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.PerfilRequest
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.UsuarioRequest
 import kotlinx.coroutines.launch
 
 class CompletarPerfilViewModel(
@@ -21,10 +21,9 @@ class CompletarPerfilViewModel(
     fun actualizarPerfil(nombre: String, telefono: String) {
         viewModelScope.launch {
             try {
-                // Creamos el objeto con los datos (Asegúrate de tener este DTO en tu backend)
-                val perfilRequest = PerfilRequest(nombre = nombre, telefono = telefono)
+                val usuarioRequest = UsuarioRequest(nombre = nombre, telefono = telefono)
 
-                val response = usuarioRepository.actualizarPerfil(perfilRequest)
+                val response = usuarioRepository.actualizarPerfil(usuarioRequest)
 
                 if (response.isSuccessful) {
                     _registroExitoso.value = Unit

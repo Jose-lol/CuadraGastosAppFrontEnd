@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface ContactoApiService {
@@ -20,4 +21,7 @@ interface ContactoApiService {
 
     @GET("/contacto/cargar")
     suspend fun cargarContactos(): Response<Collection<UsuarioResponse>>
+
+    @GET("/contacto/cargarNoEnGrupo")
+    suspend fun cargarContactosNoEnGrupo(@Query("idGrupo") idGrupo: Int?): Response<Collection<UsuarioResponse>>
 }

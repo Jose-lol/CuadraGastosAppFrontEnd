@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_contactos"
             app:destination="@id/fragmento_contactos" />
+        <action
+            android:id="@+id/action_fragmento_cuenta_cliente_to_fragmento_modificar_perfil"
+            app:destination="@id/fragmento_modificar_perfil" />
 
     </fragment>
     <!-- Fragmento Modificar Perfil -->

@@ -1,6 +1,7 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.auth.response
 
 import com.google.gson.annotations.SerializedName
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioResponse
 
 class JwtResponse {
     @SerializedName("accessToken")
@@ -8,15 +9,6 @@ class JwtResponse {
     @SerializedName("refreshToken")
     val refreshToken: String? = null
 
-    @SerializedName("email")
-    val email: String? = null
-
-    @SerializedName("telefono")
-    val telefono: String? = null
-
-    @SerializedName("nombre")
-    val nombre: String? = null
-
-    @SerializedName("idUsuario")
-    val idUsuario: Int? = null
+    @SerializedName("usuario")
+    val usuario: UsuarioResponse? = null
 }

@@ -16,7 +16,7 @@ class LoginClienteViewModel(
     private val sessionManager: SessionManager,
 ) : ViewModel() {
 
-    private val _usuario = MutableLiveData<JwtResponse?>()
+    private val _usuario = MutableLiveData<JwtResponse>()
     val usuario: LiveData<JwtResponse?> = _usuario
 
     private val _error = MutableLiveData<String?>()
@@ -37,7 +37,7 @@ class LoginClienteViewModel(
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
-                        sessionManager.saveSession(body.accessToken, body.refreshToken, body.idUsuario)
+                        sessionManager.saveSession(body.accessToken, body.refreshToken, body.usuario)
                         _usuario.value=response.body()
                     }
                 } else {
@@ -75,7 +75,7 @@ class LoginClienteViewModel(
                             sessionManager.saveSession(
                                 body.accessToken,
                                 body.refreshToken,
-                                body.idUsuario
+                                body.usuario
                             )
                             _usuario.value = response.body()
                         }

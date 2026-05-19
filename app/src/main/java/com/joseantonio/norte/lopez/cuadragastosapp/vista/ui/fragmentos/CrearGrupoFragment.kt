@@ -11,10 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.joseantonio.norte.lopez.cuadragastosapp.R
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.GrupoRepository
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.enums.CategoriaGrupo
 import com.joseantonio.norte.lopez.cuadragastosapp.data.local.SessionManager
 import com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel.CrearGruposViewModel
 import java.time.Clock
@@ -43,10 +45,8 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
 
         val btnBack= view.findViewById<ImageButton>(R.id.btnBack)
         val txtNombreGrupo= view.findViewById<EditText>(R.id.txtNombreGrupo)
-        val btnTipoCasa = view.findViewById<Button>(R.id.btnTipoCasa)
-        val btnTipoViaje = view.findViewById<Button>(R.id.btnTipoViaje)
-        val btnTipoOtro = view.findViewById<Button>(R.id.btnTipoOtro)
         val btnCrearGrupo = view.findViewById<Button>(R.id.btnCrearGrupo)
+        val toggleGroupType = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroupType)
 
         val clock=Clock.systemUTC()
 
@@ -56,12 +56,26 @@ class CrearGrupoFragment : Fragment(R.layout.fragment_crear_grupo){
         if(idUsuario != -1 ) {
             btnCrearGrupo.setOnClickListener {
 
-                var nombre = txtNombreGrupo.text.toString()
+                val nombre = txtNombreGrupo.text.toString()
 
-                val grupoRequest = GrupoRequest(
-                    null, nombre
-                )
-                viewModel.crearGrupo(grupoRequest)
+                // 2. Usamos 'when' para determinar la categoría según el botón seleccionado
+                val categoriaSeleccionada: CategoriaGrupo = when (toggleGroupType.checkedButtonId) {
+                    R.id.btnTipoCasa -> CategoriaGrupo.CASA
+                    R.id.btnTipoViaje -> CategoriaGrupo.VIAJE
+                    R.id.btnTipoPareja -> CategoriaGrupo.PAREJA
+                    R.id.btnTipoOtro -> CategoriaGrupo.OTRO
+                    else -> CategoriaGrupo.OTRO // Por si acaso no hay ninguno marcado
+                }
+                if (nombre.isNotEmpty()) {
+                    val grupoRequest = GrupoRequest(
+                        idGrupo = null,
+                        nombre = nombre,
+                        categoria = categoriaSeleccionada
+                    )
+                    viewModel.crearGrupo(grupoRequest)
+                } else {
+                    txtNombreGrupo.error = "Escribe un nombre para el grupo"
+                }
             }
         }else{
             Toast.makeText(requireContext(), "Usuario no encontrado en las preferencias" , Toast.LENGTH_SHORT).show()
