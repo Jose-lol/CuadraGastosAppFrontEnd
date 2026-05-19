@@ -2,6 +2,7 @@ package com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response
 
 import com.google.gson.annotations.SerializedName
 import com.joseantonio.norte.lopez.cuadragastosapp.data.entity.Grupo
+import com.joseantonio.norte.lopez.cuadragastosapp.data.enums.CategoriaGrupo
 
 data class GrupoResponse (
 
@@ -12,7 +13,9 @@ data class GrupoResponse (
     val nombre: String? = "",
 
     @SerializedName("estado")
-    val estado: String? = ""
+    val estado: String? = "",
+    @SerializedName("categoria")
+    val categoria: CategoriaGrupo? = null
 ) {
     companion object {
         fun fromEntity(grupo: Grupo): GrupoResponse {

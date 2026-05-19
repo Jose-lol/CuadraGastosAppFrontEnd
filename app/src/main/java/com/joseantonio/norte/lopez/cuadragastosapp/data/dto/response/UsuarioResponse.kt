@@ -14,7 +14,7 @@ data class UsuarioResponse(
     @SerializedName("telefono")
     val telefono: String? = ""
 ) {
-    // Método para convertir la respuesta de la API a tu entidad de la UI
+
     fun toContacto(agregado: Boolean = false): Contacto {
         return Contacto(
             nombre = this.nombre ?: "Desconocido",

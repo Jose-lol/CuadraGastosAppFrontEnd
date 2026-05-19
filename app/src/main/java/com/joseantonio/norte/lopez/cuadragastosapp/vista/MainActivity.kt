@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 sessionManager.saveSession(
                     body.accessToken,
                     body.refreshToken,
-                    body.idUsuario
+                    body.usuario
                 )
                 true
             } else {

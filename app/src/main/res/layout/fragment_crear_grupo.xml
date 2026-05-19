@@ -2,10 +2,10 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmento_crear_grupo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragmento_crear_grupo"
-    android:background="#FFFFFF"
+    android:background="#000000"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,22 +13,48 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volver"
+            android:src="@android:drawable/ic_menu_revert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#5BC5A7" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nuevo Grupo"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnBack" />
+
         <FrameLayout
             android:id="@+id/imageContainer"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivGroupImage"
                 android:layout_width="match_parent"
-                android:layout_height="119dp"
-                android:background="#F0F0F0"
+                android:layout_height="match_parent"
+                android:background="#1A1A1A"
                 android:padding="2dp"
                 android:scaleType="centerInside"
                 android:src="@android:drawable/ic_menu_camera"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
                 app:strokeColor="#5BC5A7"
                 app:strokeWidth="2dp" />
 
@@ -39,7 +65,7 @@
                 app:backgroundTint="#5BC5A7"
                 app:fabSize="mini"
                 app:srcCompat="@android:drawable/ic_input_add"
-                app:tint="#FFFFFF" />
+                app:tint="#000000" />
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -47,7 +73,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:hint="Nombre del grupo"
             app:boxStrokeColor="#5BC5A7"
             app:hintTextColor="#5BC5A7"
@@ -57,15 +83,18 @@
                 android:id="@+id/txtNombreGrupo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences"
+                android:textColor="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvLabelType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Tipo de grupo"
+            android:layout_marginTop="32dp"
+            android:text="Categoría"
+            android:textColor="#5BC5A7"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilGroupName" />
@@ -74,55 +103,90 @@
             android:id="@+id/toggleGroupType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:singleSelection="true"
+            android:layout_marginTop="12dp"
+            app:checkedButton="@+id/btnTipoCasa"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelType"
             app:selectionRequired="true"
-            app:checkedButton="@+id/btnTypeHome"
-            app:layout_constraintTop_toBottomOf="@id/tvLabelType">
+            app:singleSelection="true">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTipoCasa"
-                style="?attr/materialButtonOutlinedStyle"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Casa" />
+                android:text="Casa"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_text_toggle"
+                android:paddingVertical="12dp"
+                app:backgroundTint="@color/selector_background_toggle"
+                app:icon="@android:drawable/ic_menu_directions"
+                app:iconGravity="top"
+                app:iconTint="@color/selector_text_toggle"
+                app:strokeColor="#333333" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTipoViaje"
-                style="?attr/materialButtonOutlinedStyle"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Viaje" />
+                android:text="Viaje"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_text_toggle"
+                android:paddingVertical="12dp"
+                app:backgroundTint="@color/selector_background_toggle"
+                app:icon="@android:drawable/ic_menu_compass"
+                app:iconGravity="top"
+                app:iconTint="@color/selector_text_toggle"
+                app:strokeColor="#333333" />
 
-            <Button
-                android:id="@+id/btnTipoOtro"
-                style="?attr/materialButtonOutlinedStyle"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTipoPareja"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Otro" />
+                android:text="Pareja"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_text_toggle"
+                android:paddingVertical="12dp"
+                app:backgroundTint="@color/selector_background_toggle"
+                app:icon="@android:drawable/btn_star_big_on"
+                app:iconGravity="top"
+                app:iconTint="@color/selector_text_toggle"
+                app:strokeColor="#333333" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTipoOtro"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Otro"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_text_toggle"
+                android:paddingVertical="12dp"
+                app:backgroundTint="@color/selector_background_toggle"
+                app:icon="@android:drawable/ic_menu_agenda"
+                app:iconGravity="top"
+                app:iconTint="@color/selector_text_toggle"
+                app:strokeColor="#333333" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCrearGrupo"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:text="Crear Grupo"
-            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:backgroundTint="#5BC5A7"
-            app:cornerRadius="8dp"
+            app:cornerRadius="16dp"
+            android:textColor="#000000"
             app:layout_constraintTop_toBottomOf="@id/toggleGroupType" />
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

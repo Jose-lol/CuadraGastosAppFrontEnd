@@ -79,7 +79,7 @@ class ContactosViewModel(private val repository: ContactoRepository
     fun cargarAmigosApp() {
         viewModelScope.launch {
             try {
-                val response = repository.cargarContactos() // Asegúrate de que el repo devuelva List<UsuarioResponse>
+                val response = repository.cargarContactos()
 
                 if (response.isSuccessful) {
                     // Mapeamos la lista de la respuesta a Contactos marcados como agregados

@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.joseantonio.norte.lopez.cuadragastosapp.R
-import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.GrupoResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioGrupoResponse
 
-class GrupoAdapter(private val listaGrupos: List<GrupoResponse>,private val onItemClick: (GrupoResponse) -> Unit) :
-        RecyclerView.Adapter<GrupoAdapter.GroupViewHolder>() {
+class UsuarioGrupoAdapter(private val listaGrupos: List<UsuarioGrupoResponse>, private val onItemClick: (UsuarioGrupoResponse) -> Unit) :
+        RecyclerView.Adapter<UsuarioGrupoAdapter.GroupViewHolder>() {
 
         class GroupViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val img: ImageView = view.findViewById(R.id.img)
@@ -26,17 +26,16 @@ class GrupoAdapter(private val listaGrupos: List<GrupoResponse>,private val onIt
         }
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-            val grupo = listaGrupos[position]
+            val usuarioGrupo = listaGrupos[position]
 
-            // Configuramos el click en la raíz del ítem
             holder.itemView.setOnClickListener {
-                onItemClick(grupo)
+                onItemClick(usuarioGrupo)
             }
 
             holder.apply {
                 img.setImageResource(R.drawable.ic_launcher_foreground)
-                txtNombreGrupo.text = grupo.nombre
-                txtEstado.text = grupo.estado
+                txtNombreGrupo.text = usuarioGrupo.grupo.nombre
+                txtEstado.text = usuarioGrupo.grupo.estado
             }
         }
 

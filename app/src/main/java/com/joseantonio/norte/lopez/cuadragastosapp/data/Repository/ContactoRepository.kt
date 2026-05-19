@@ -26,4 +26,7 @@ class ContactoRepository(requireContext: Context)  {
         return api.cargarContactos()
     }
 
+    suspend fun cargarContactosNoEnGrupo(idGrupo: Int?): Response<Collection<UsuarioResponse>> {
+        return api.cargarContactosNoEnGrupo(idGrupo)
+    }
 }

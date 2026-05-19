@@ -67,7 +67,7 @@ class TokenAuthenticator(
                     sessionManager.saveSession(
                         body.accessToken,
                         body.refreshToken,
-                        body.idUsuario
+                        body.usuario
                     )
 
                     return response.request.newBuilder()

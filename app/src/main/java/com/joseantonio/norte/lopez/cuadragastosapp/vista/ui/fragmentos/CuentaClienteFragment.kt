@@ -36,22 +36,20 @@ class CuentaClienteFragment : Fragment(R.layout.fragment_cuenta_cliente) {
         super.onViewCreated(view, savedInstanceState)
 
         sessionManager = SessionManager(requireContext())
-
-        val tvNombre = view.findViewById<TextView>(R.id.tvNombreUsuario)
-        val tvEmail = view.findViewById<TextView>(R.id.tvEmailUsuario)
-
-        val btnModificar = view.findViewById<Button>(R.id.btnModificarPerfil)
-        val btnAjustes = view.findViewById<Button>(R.id.btnAjustes)
+        val tvNombreCuenta = view.findViewById<TextView>(R.id.tvNombreCuenta)
+        val tvEmailCuenta = view.findViewById<TextView>(R.id.tvEmailCuenta)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnEditarPerfil = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnEditarPerfil)
+        val nombreUsuario = sessionManager.getNombre()
+        val emailUsuario = sessionManager.getEmail()
 
-        // ir a modificar perfil
-        btnModificar.setOnClickListener {
-            findNavController().navigate(R.id.fragmento_modificar_perfil)
+        if (nombreUsuario != null && emailUsuario != null) {
+            tvNombreCuenta.text = nombreUsuario
+            tvEmailCuenta.text = emailUsuario
         }
 
-        // ⚙️ ajustes (placeholder)
-        btnAjustes.setOnClickListener {
-            Toast.makeText(requireContext(), "Próximamente", Toast.LENGTH_SHORT).show()
+        btnEditarPerfil.setOnClickListener {
+            findNavController().navigate(R.id.action_fragmento_cuenta_cliente_to_fragmento_modificar_perfil)
         }
 
         // 🚪 logout PRO
