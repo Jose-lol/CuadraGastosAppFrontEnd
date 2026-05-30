@@ -134,6 +134,12 @@
         <action
             android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_anadir_amigo_a_grupo"
             app:destination="@id/fragmento_anadir_amigo_a_grupo" />
+        <action
+            android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_anadir_gasto"
+            app:destination="@id/fragmento_anadir_gasto" />
+        <action
+            android:id="@+id/action_fragmento_detalle_grupo_to_fragmento_detalle_gasto"
+            app:destination="@id/fragmento_detalle_gasto" />
     </fragment>
 
     <!-- Fragmento configuracion grupo-->
@@ -170,6 +176,27 @@
         <action
             android:id="@+id/action_fragmento_completar_perfil_to_fragmento_grupo_principal"
             app:destination="@id/fragmento_grupo_principal" />
+    </fragment>
+
+    <!-- Fragmento de Realizar Gasto -->
+    <fragment
+        android:id="@+id/fragmento_anadir_gasto"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.AnadirGastoFragment"
+        android:label="anadirGasto">
+
+        <action
+            android:id="@+id/action_fragmento_anadir_gasto_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
+    </fragment>
+
+    <!-- Fragmento ver detalle Gasto -->
+    <fragment
+        android:id="@+id/fragmento_detalle_gasto"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.DetalleGastoFragment"
+        android:label="detalleGasto">
+        <action
+            android:id="@+id/action_fragmento_detalle_gasto_to_fragmento_detalle_grupo"
+            app:destination="@id/fragmento_detalle_grupo" />
     </fragment>
 
 </navigation>

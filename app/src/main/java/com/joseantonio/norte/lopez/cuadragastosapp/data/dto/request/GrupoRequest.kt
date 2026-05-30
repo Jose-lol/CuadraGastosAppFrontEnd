@@ -1,6 +1,5 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request
 
-import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioResponse
 import com.joseantonio.norte.lopez.cuadragastosapp.data.enums.CategoriaGrupo
 
 data class GrupoRequest(

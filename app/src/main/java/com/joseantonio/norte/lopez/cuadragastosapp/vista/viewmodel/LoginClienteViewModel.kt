@@ -1,5 +1,6 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,6 +54,7 @@ class LoginClienteViewModel(
                     }
                 }
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.value = "No se pudo conectar con el servidor."
             } finally {
                 _isLoading.value = false
@@ -91,6 +93,7 @@ class LoginClienteViewModel(
                         }
                     }
                 } catch (e: Exception) {
+                    Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                     _error.value = "No se pudo conectar con el servidor."
                 } finally {
                     _isLoading.value = false
