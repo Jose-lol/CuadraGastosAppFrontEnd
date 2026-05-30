@@ -2,6 +2,7 @@ package com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel
 
 import android.content.Context
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,6 +49,7 @@ class ContactosViewModel(private val repository: ContactoRepository
                 _contactosMovil.postValue(listaSoloMovil)
 
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.postValue("Error al leer contactos: ${e.message}")
             }
         }
@@ -71,6 +73,7 @@ class ContactosViewModel(private val repository: ContactoRepository
                     }
                 }
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.value = "Error de conexión: ${e.message}"
             }
         }
@@ -100,6 +103,7 @@ class ContactosViewModel(private val repository: ContactoRepository
                     }
                 }
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.postValue("Error: ${e.message}")
             }
         }
@@ -142,6 +146,7 @@ class ContactosViewModel(private val repository: ContactoRepository
                     }
                 }
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.value = "Error de conexión"
             }
         }

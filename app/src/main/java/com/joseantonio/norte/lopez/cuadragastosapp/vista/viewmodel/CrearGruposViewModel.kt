@@ -1,5 +1,6 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,6 +50,7 @@ class CrearGruposViewModel (private val repository: GrupoRepository) : ViewModel
                     }
                 }
             } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 _error.value = "Error de conexión "+e.message.toString()
             }
         }

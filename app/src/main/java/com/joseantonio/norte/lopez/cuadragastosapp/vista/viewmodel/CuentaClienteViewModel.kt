@@ -1,5 +1,6 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -51,7 +52,7 @@ class CuentaClienteViewModel(private val repository: AuthRepository, private val
                 }
 
             } catch (e: Exception) {
-
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
                 sessionManager.clearSession()
                 _error.value = "No se pudo conectar con el servidor."
 

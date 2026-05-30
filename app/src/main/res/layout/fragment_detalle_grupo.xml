@@ -87,18 +87,21 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAnadirAmigo"
-        android:layout_width="142dp"
-        android:layout_height="101dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:padding="12dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:text="Miembros"
         android:textAllCaps="false"
         android:textColor="#000000"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:backgroundTint="#5BC5A7"
         app:cornerRadius="20dp"
         app:icon="@android:drawable/ic_menu_add"
-        app:iconSize="16dp"
+        app:iconSize="18dp"
         app:iconTint="#000000"
         app:layout_anchor="@id/mi_app_bar"
         app:layout_anchorGravity="bottom|end" />
@@ -111,46 +114,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayoutDetalle"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvTituloSeccion"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#000000"
-                app:tabIndicatorColor="#5BC5A7"
-                app:tabIndicatorHeight="3dp"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="#5BC5A7"
-                app:tabTextColor="#777777">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gastos" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Deudas" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gráficos" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pizarra" />
-            </com.google.android.material.tabs.TabLayout>
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="Gastos"
+                android:textColor="#5BC5A7"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvContenidoDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:padding="8dp" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
