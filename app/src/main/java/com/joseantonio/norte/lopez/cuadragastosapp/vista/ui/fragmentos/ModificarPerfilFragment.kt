@@ -1,6 +1,7 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
@@ -21,6 +22,10 @@ import kotlin.getValue
 
 class ModificarPerfilFragment : Fragment(R.layout.fragment_modificar_perfil) {
 
+    companion object {
+        private const val TAG = "ModificarPerfilFragment"
+    }
+
     private val viewModel: ModificarPerfilViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -38,11 +43,9 @@ class ModificarPerfilFragment : Fragment(R.layout.fragment_modificar_perfil) {
 
     private lateinit var sessionManager: SessionManager
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: Fragment cargado")
 
         val etNombre = view.findViewById<EditText>(R.id.etNombre)
         val etTelefono = view.findViewById<EditText>(R.id.etTelefono)
@@ -51,32 +54,38 @@ class ModificarPerfilFragment : Fragment(R.layout.fragment_modificar_perfil) {
 
         sessionManager = SessionManager(requireContext())
         val idUsuario = sessionManager.getIdUsuario()
+        Log.d(TAG, "Cargando datos de sesión. idUsuario: $idUsuario")
 
         etNombre.setText(sessionManager.getNombre())
         etTelefono.setText(sessionManager.getTelefono())
         etEmail.setText(sessionManager.getEmail())
 
         if (idUsuario == -1) {
+            Log.e(TAG, "Error: idUsuario es -1. Usuario no encontrado en SessionManager")
             Toast.makeText(requireContext(), "Usuario no encontrado", Toast.LENGTH_SHORT).show()
             return
         }
 
         viewModel.updateUsuarioResult.observe(viewLifecycleOwner) { updated ->
+            Log.d(TAG, "Observador updateUsuarioResult: Resultado recibido = $updated")
             if (updated != null) {
+                Log.i(TAG, "Actualización exitosa. Navegando a cuenta cliente")
                 Toast.makeText(requireContext(), "Cliente actualizado", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(
                     R.id.action_fragmento_modificar_perfil_to_fragmento_cuenta_cliente
                 )
             } else {
+                Log.e(TAG, "Error: El resultado de la actualización es nulo")
                 Toast.makeText(requireContext(), "No se pudo modificar", Toast.LENGTH_SHORT).show()
             }
         }
 
         btnGuardar.setOnClickListener {
-
             val nombre = etNombre.text.toString().trim()
             val telefono = etTelefono.text.toString().trim()
             val email = etEmail.text.toString().trim()
+
+            Log.i(TAG, "Click en btnGuardar. Enviando datos: Nombre=$nombre, Telefono=$telefono, Email=$email")
 
             val usuarioRequest = UsuarioRequest(
                 nombre = nombre,
@@ -86,5 +95,10 @@ class ModificarPerfilFragment : Fragment(R.layout.fragment_modificar_perfil) {
 
             viewModel.modificarUsuario(usuarioRequest)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: Limpiando vista")
     }
 }

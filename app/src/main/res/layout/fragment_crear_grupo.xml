@@ -52,20 +52,11 @@
                 android:layout_height="match_parent"
                 android:background="#1A1A1A"
                 android:padding="2dp"
-                android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_camera"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hhh"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
                 app:strokeColor="#5BC5A7"
                 app:strokeWidth="2dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:backgroundTint="#5BC5A7"
-                app:fabSize="mini"
-                app:srcCompat="@android:drawable/ic_input_add"
-                app:tint="#000000" />
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout

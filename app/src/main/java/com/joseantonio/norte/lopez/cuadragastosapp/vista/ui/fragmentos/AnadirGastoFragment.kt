@@ -1,6 +1,7 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
@@ -32,6 +33,10 @@ import kotlin.getValue
 
 class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
 
+    companion object {
+        private const val TAG = "AnadirGastoFragment"
+    }
+
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     lateinit var sessionManager: SessionManager
@@ -49,6 +54,7 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: Fragment cargado")
 
         val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
         val txtDescripcion = view.findViewById<TextInputEditText>(R.id.txtDescripcion)
@@ -60,8 +66,10 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 sharedViewModel.miUsuarioEnGrupo.collect { grupo ->
+                    Log.d(TAG, "StateFlow miUsuarioEnGrupo emitió: $grupo")
                     grupo?.let {
                         idGrupo = it.grupo.idGrupo
+                        Log.d(TAG, "idGrupo asignado desde SharedViewModel: $idGrupo")
                     }
                 }
             }
@@ -70,16 +78,19 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
         sessionManager = SessionManager(requireContext())
 
         btnCrearGasto.setOnClickListener {
-
             val descripcion = txtDescripcion.text.toString().trim()
             val cantidadTexto = txtCantidad.text.toString().trim()
 
+            Log.i(TAG, "Click en btnCrearGasto: Intentando añadir gasto. Descripcion='$descripcion', Cantidad='$cantidadTexto'")
+
             if (descripcion.isEmpty()) {
+                Log.w(TAG, "Validación fallida: Descripción vacía")
                 txtDescripcion.error = "Introduce una descripción"
                 return@setOnClickListener
             }
 
             if (cantidadTexto.isEmpty()) {
+                Log.w(TAG, "Validación fallida: Cantidad vacía")
                 txtCantidad.error = "Introduce una cantidad"
                 return@setOnClickListener
             }
@@ -88,12 +99,14 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
             val selectedChipId = chipGroup.checkedChipId
 
             if (selectedChipId == View.NO_ID) {
+                Log.w(TAG, "Validación fallida: No se ha seleccionado ninguna categoría")
                 Toast.makeText(requireContext(), "Selecciona una categoría", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val selectedChip = chipGroup.findViewById<Chip>(selectedChipId)
             val categoriaSeleccionada = selectedChip.tag as CategoriaGasto
+            Log.d(TAG, "Categoría seleccionada: $categoriaSeleccionada")
 
             val gastoRequest = GastoRequest(
                 idGrupo = idGrupo,
@@ -104,10 +117,12 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
                 saldado = false
             )
 
+            Log.d(TAG, "Campos válidos. Llamando a viewModel.anadirGasto")
             viewModel.anadirGasto(gastoRequest)
         }
 
         viewModel.resultado.observe(viewLifecycleOwner) {
+            Log.i(TAG, "Observador resultado: Gasto creado con éxito. Volviendo a detalle de grupo")
             Toast.makeText(
                 requireContext(),
                 "Gasto añadido correctamente",
@@ -118,23 +133,23 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
         }
 
         viewModel.error.observe(viewLifecycleOwner) { msg ->
+            Log.e(TAG, "Observador error: Mensaje de error recibido -> '$msg'")
             msg?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
 
         btnBack.setOnClickListener {
+            Log.i(TAG, "Click en btnBack: Volviendo atrás en el backstack")
             findNavController().popBackStack()
         }
     }
 
-
     private fun setupCategorias(view: View) {
-
+        Log.d(TAG, "setupCategorias: Inicializando de forma dinámica el ChipGroup de categorías")
         val chipGroup = view.findViewById<ChipGroup>(R.id.chipCategorias)
 
         CategoriaGasto.values().forEach { categoria ->
-
             val chip = Chip(requireContext()).apply {
                 text = categoria.name.lowercase()
                     .replace("_", " ")
@@ -149,5 +164,10 @@ class AnadirGastoFragment : Fragment(R.layout.fragment_anadir_gasto) {
 
             chipGroup.addView(chip)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: Limpiando vista")
     }
 }

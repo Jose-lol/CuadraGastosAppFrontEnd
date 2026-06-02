@@ -199,4 +199,12 @@
             app:destination="@id/fragmento_detalle_grupo" />
     </fragment>
 
+    <!-- Fragmento de actividad -->
+    <fragment
+        android:id="@+id/fragmento_actividad"
+        android:name="com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos.ActividadFragment"
+        android:label="actividad">
+
+    </fragment>
+
 </navigation>

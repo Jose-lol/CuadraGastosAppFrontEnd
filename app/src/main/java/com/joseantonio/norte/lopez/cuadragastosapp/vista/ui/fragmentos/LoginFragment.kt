@@ -27,6 +27,10 @@ import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GoogleLoginR
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+    companion object {
+        private const val TAG = "LoginFragment"
+    }
+
     private lateinit var sessionManager: SessionManager
     private val viewModel: LoginClienteViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -45,6 +49,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: Fragment cargado")
 
         val btnLogin = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnLogin)
         val btnRegistro = view.findViewById<TextView>(R.id.btnIrRegistro)
@@ -53,6 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val btnGoogleLogin = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnGoogleLogin)
 
         btnGoogleLogin.setOnClickListener {
+            Log.i(TAG, "Click en btnGoogleLogin: Iniciando flujo de Google")
             ejecutarFlujoGoogle()
         }
 
@@ -60,38 +66,44 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
 
+            Log.i(TAG, "Click en btnLogin: Intento de inicio de sesión para el email: $email")
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
+                Log.d(TAG, "Campos no vacíos. Llamando a viewModel.login")
                 viewModel.login(email, password)
             } else {
+                Log.w(TAG, "Validación fallida: Email o contraseña vacíos")
                 Toast.makeText(requireContext(), "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
 
         viewModel.usuario.observe(viewLifecycleOwner) { userResponse ->
+            Log.d(TAG, "Observador usuario: Resultado recibido = $userResponse")
             userResponse?.let {
-
-                Toast.makeText(requireContext(), "Bienvenido, ${it.usuario?.email}", Toast.LENGTH_SHORT).show()
                 if(it.usuario?.nombre == null || it.usuario.nombre.isEmpty() || it.usuario.telefono ==  null || it.usuario.telefono.isEmpty()){
+                    Log.i(TAG, "Perfil incompleto. Navegando a completar perfil")
                     findNavController().navigate(R.id.action_fragmento_login_to_fragmento_completar_perfil)
                 }else{
+                    Log.i(TAG, "Perfil completo. Navegando al grupo principal")
                     findNavController().navigate(R.id.action_fragmento_login_to_fragmento_grupo_principal)
                 }
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { msg ->
+            Log.e(TAG, "Observador error: Recibido mensaje de error -> '$msg'")
             msg?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
             }
         }
 
         btnRegistro.setOnClickListener {
+            Log.i(TAG, "Click en btnRegistro: Navegando hacia la pantalla de Registro")
             findNavController().navigate(R.id.action_fragmento_login_to_fragmento_registro)
         }
-
     }
-    private fun ejecutarFlujoGoogle() {
 
+    private fun ejecutarFlujoGoogle() {
         val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId(getString(R.string.google_client_id))
@@ -104,6 +116,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val credentialManager = CredentialManager.create(requireContext())
+                Log.d(TAG, "Llamando a credentialManager.getCredential")
 
                 val result = credentialManager.getCredential(
                     request = request,
@@ -114,17 +127,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 try {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-
                     val token = googleIdTokenCredential.idToken
+                    Log.d(TAG, "Token obtenido con éxito. Enviando a viewModel.loginWithGoogle")
                     viewModel.loginWithGoogle(GoogleLoginRequest(token))
 
                 } catch (e: GoogleIdTokenParsingException) {
-                    Log.e("Login", "La credencial recibida no es un ID Token de Google: ${e.message}")
+                    Log.e(TAG, "La credencial recibida no es un ID Token de Google: ${e.message}")
                 }
 
             } catch (e: GetCredentialException) {
-                Log.e("GoogleAuth", "Credential error: ${e.message}", e)
+                Log.e(TAG, "Credential error: ${e.message}", e)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: Limpiando vista")
     }
 }

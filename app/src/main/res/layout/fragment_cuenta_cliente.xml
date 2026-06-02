@@ -73,6 +73,8 @@
                         android:id="@+id/ivImagenCuenta"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:src="@drawable/foto_perfil"
+                        android:scaleType="centerInside"
                         android:background="@android:color/transparent"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -131,61 +133,7 @@
                 app:cardCornerRadius="24dp"
                 app:cardElevation="8dp"
                 app:strokeColor="#1F1F1F"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <!-- AJUSTES -->
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnAjustes"
-                        android:layout_width="match_parent"
-                        android:layout_height="58dp"
-                        android:layout_margin="8dp"
-                        android:gravity="start|center_vertical"
-                        android:paddingStart="20dp"
-                        android:text="Ajustes"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        app:backgroundTint="#1E1E1E"
-                        app:cornerRadius="18dp"
-                        app:icon="@android:drawable/ic_menu_manage"
-                        app:iconGravity="textStart"
-                        app:iconPadding="12dp"
-                        app:iconTint="#5BC5A7"
-                        app:strokeColor="#2A2A2A"
-                        app:strokeWidth="1dp"/>
-
-                    <!-- PREMIUM -->
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnPremium"
-                        android:layout_width="match_parent"
-                        android:layout_height="58dp"
-                        android:layout_margin="8dp"
-                        android:gravity="start|center_vertical"
-                        android:paddingStart="20dp"
-                        android:text="Hazte premium"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        app:backgroundTint="#1E1E1E"
-                        app:cornerRadius="18dp"
-                        app:icon="@android:drawable/star_big_on"
-                        app:iconGravity="textStart"
-                        app:iconPadding="12dp"
-                        app:iconTint="#FFD54F"
-                        app:strokeColor="#2A2A2A"
-                        app:strokeWidth="1dp"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                app:strokeWidth="1dp"/>
 
             <!-- ESPACIADOR -->
             <View

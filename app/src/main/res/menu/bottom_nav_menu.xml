@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/fragmento_grupo_principal" android:icon="@drawable/ic_home"
+        android:id="@+id/fragmento_grupo_principal" android:icon="@drawable/grupos"
         android:title="Grupos" />
     <item
-        android:id="@+id/fragmento_contactos" android:icon="@drawable/ic_profile"
+        android:id="@+id/fragmento_contactos" android:icon="@drawable/ic_amigos"
         android:title="Amigos" />
     <item
-        android:id="@+id/fragmento_detalle_grupo" android:icon="@drawable/ic_phone"
+        android:id="@+id/fragmento_actividad" android:icon="@drawable/ic_actividad"
         android:title="Actividad" />
     <item
-        android:id="@+id/fragmento_cuenta_cliente" android:icon="@drawable/ic_actividad"
+        android:id="@+id/fragmento_cuenta_cliente" android:icon="@drawable/ic_profile"
         android:title="Cuenta" />
 </menu>
