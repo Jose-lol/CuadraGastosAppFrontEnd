@@ -3,12 +3,16 @@
     <!-- En themes.xml -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_home</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
 
         <item name="postSplashScreenTheme">@style/Theme.TuProyectoMaterial3</item>
     </style>
 
     <style name="Theme.TuProyectoMaterial3" parent="Theme.Material3.DayNight.NoActionBar">
 
+    </style>
+
+    <style name="NavIndicatorVerde" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#5BC5A7</item>
     </style>
 </resources>

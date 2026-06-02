@@ -95,4 +95,8 @@ object RetrofitClient {
         createService(GastoApiService::class.java)
     }
 
+    val instanceActividad: ActividadApiService by lazy {
+        createService(ActividadApiService::class.java)
+    }
+
 }

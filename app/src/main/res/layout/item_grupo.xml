@@ -34,10 +34,7 @@
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_group"
-                app:tint="#000000" />
+                android:src="@drawable/hhh" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView

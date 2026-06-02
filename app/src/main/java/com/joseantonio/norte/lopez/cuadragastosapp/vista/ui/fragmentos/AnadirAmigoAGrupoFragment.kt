@@ -1,6 +1,7 @@
 package com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.fragmentos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageButton
@@ -25,6 +26,10 @@ import kotlin.getValue
 
 class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grupo) {
 
+    companion object {
+        private const val TAG = "AnadirAmigoAGrupoFrag"
+    }
+
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: AnadirAmigoAGrupoViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -40,6 +45,7 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: Fragment cargado")
 
         val btnAtras = view.findViewById<ImageButton>(R.id.btnAtras)
         val btnFinalizar = view.findViewById<MaterialButton>(R.id.btnFinalizar)
@@ -47,6 +53,7 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
         val rvMisAmigos = view.findViewById<RecyclerView>(R.id.rvMisAmigos)
 
         amigosAdapter = AmigosAdapter { cantidad ->
+            Log.d(TAG, "Callback adapter: Cambió selección de miembros. Cantidad = $cantidad")
             if (cantidad > 0) {
                 btnFinalizar.isChecked = true
                 btnFinalizar.text = "Confirmar $cantidad miembros"
@@ -57,31 +64,37 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
         }
 
         val idGrupoActual = sharedViewModel.miUsuarioEnGrupo.value?.grupo?.idGrupo
+        Log.d(TAG, "idGrupoActual obtenido desde el SharedViewModel: $idGrupoActual")
 
         rvMisAmigos.layoutManager = LinearLayoutManager(requireContext())
         rvMisAmigos.adapter = amigosAdapter
 
+        Log.d(TAG, "Llamando a viewModel.cargarContactosNoEnGrupo para el grupo ID: $idGrupoActual")
         viewModel.cargarContactosNoEnGrupo(idGrupoActual)
 
         viewModel.listaAmigos.observe(viewLifecycleOwner) { amigos ->
+            Log.d(TAG, "Observador listaAmigos: Recibidos ${amigos?.size ?: 0} amigos disponibles")
             amigosAdapter.actualizarLista(amigos.toList())
         }
 
         searchViewAmigos.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "searchViewAmigos texto cambiado: '$newText'")
                 return true
             }
         })
 
         btnFinalizar.setOnClickListener {
-            val idGrupoActual = sharedViewModel.miUsuarioEnGrupo.value?.grupo?.idGrupo
+            val currentGroupId = sharedViewModel.miUsuarioEnGrupo.value?.grupo?.idGrupo
             val idsSeleccionados = amigosAdapter.getIdsSeleccionados()
 
-            if (idGrupoActual != null && idsSeleccionados.isNotEmpty()) {
+            Log.i(TAG, "Click en btnFinalizar: Intentando añadir ${idsSeleccionados.size} miembros al grupo ID: $currentGroupId")
+
+            if (currentGroupId != null && idsSeleccionados.isNotEmpty()) {
                 idsSeleccionados.forEach { idUsuario ->
-                    val request =
-                        UsuarioGrupoRequest(idGrupo = idGrupoActual, idUsuario = idUsuario)
+                    Log.d(TAG, "Enviando solicitud para añadir usuario ID: $idUsuario al grupo ID: $currentGroupId")
+                    val request = UsuarioGrupoRequest(idGrupo = currentGroupId, idUsuario = idUsuario)
                     viewModel.anadirAmigoAGrupo(request)
                 }
 
@@ -89,19 +102,27 @@ class AnadirAmigoAGrupoFragment : Fragment(R.layout.fragment_anadir_amigo_a_grup
                 amigosAdapter.limpiarSeleccionados()
                 btnFinalizar.isEnabled = false
                 btnFinalizar.text = "Confirmar miembros"
+            } else {
+                Log.w(TAG, "Intento de finalización fallido: currentGroupId es nulo o no hay ids seleccionados")
             }
         }
 
-        viewModel.resultado.observe(viewLifecycleOwner) {msg ->
-            msg?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
-
+        viewModel.resultado.observe(viewLifecycleOwner) { msg ->
+            Log.d(TAG, "Observador resultado: Recibido mensaje de éxito -> '$msg'")
         }
 
         viewModel.error.observe(viewLifecycleOwner) { msg ->
-            msg?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+            Log.e(TAG, "Observador error: Mensaje de error recibido -> '$msg'")
         }
+
         btnAtras.setOnClickListener {
+            Log.i(TAG, "Click en btnAtras: Volviendo atrás en el backstack")
             findNavController().popBackStack()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: Limpiando vista")
     }
 }
