@@ -10,6 +10,7 @@ import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.GrupoReposito
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GastoRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.GastoResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.SaldoUsuarioGrupo
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioGrupoResponse
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,14 @@ class DetalleGruposViewModel  (private val repository: GastoRepository) : ViewMo
         private val _gastoGrupo = MutableLiveData<List<GastoResponse>>()
 
         val gastoGrupo : LiveData<List<GastoResponse>> = _gastoGrupo
-        private val _error = MutableLiveData<String?>()
+
+        private val _saldoGrupo = MutableLiveData<List<SaldoUsuarioGrupo>>()
+
+        val saldoGrupo  : LiveData<List<SaldoUsuarioGrupo>> = _saldoGrupo
+
+        private val _resultado = MutableLiveData<String>()
+        val resultado: LiveData<String> get() = _resultado
+    private val _error = MutableLiveData<String?>()
         val error: LiveData<String?> = _error
 
         fun  cargarGastosGrupo(idGrupo: Int?){
@@ -44,4 +52,54 @@ class DetalleGruposViewModel  (private val repository: GastoRepository) : ViewMo
                 }
             }
         }
+
+        fun  obtenerCuentasClarasDelGrupo(idGrupo: Int?){
+            viewModelScope.launch {
+                try {
+                    val response = repository.obtenerCuentasClarasDelGrupo(idGrupo)
+                    if (response.isSuccessful) {
+                        _saldoGrupo.value = response.body()
+                    } else {
+                        _error.value = when (response.code()) {
+                            400 -> "Solicitud incorrecta"
+                            401 -> "Sesión expirada. Vuelve a iniciar sesión"
+                            403 -> "No tienes permisos para acceder"
+                            404 -> "No se encontraron grupos"
+                            408 -> "Tiempo de espera agotado"
+                            429 -> "Demasiadas solicitudes. Inténtalo más tarde"
+                            else -> "Error inesperado: ${response.code()}"
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
+                    _error.value = "Error de conexión "+e.message.toString()
+                }
+            }
+        }
+
+    fun  saldarCuentasGrupo(idGrupo: Int?){
+        viewModelScope.launch {
+            try {
+                val response = repository.saldarCuentasGrupo(idGrupo)
+                if (response.isSuccessful) {
+                    _resultado.value = "Éxito: cuenta saldada en el grupo con exito"
+                    cargarGastosGrupo(idGrupo)
+                    obtenerCuentasClarasDelGrupo(idGrupo)
+                } else {
+                    _error.value = when (response.code()) {
+                        400 -> "Solicitud incorrecta"
+                        401 -> "Sesión expirada. Vuelve a iniciar sesión"
+                        403 -> "No tienes permisos para acceder"
+                        404 -> "No se encontraron grupos"
+                        408 -> "Tiempo de espera agotado"
+                        429 -> "Demasiadas solicitudes. Inténtalo más tarde"
+                        else -> "Error inesperado: ${response.code()}"
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("RETROFIT_DEBUG", "¡Excepción crítica capturada!",e)
+                _error.value = "Error de conexión "+e.message.toString()
+            }
+        }
+    }
     }

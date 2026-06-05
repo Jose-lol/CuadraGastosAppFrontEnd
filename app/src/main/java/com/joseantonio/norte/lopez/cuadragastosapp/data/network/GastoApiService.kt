@@ -2,7 +2,9 @@ package com.joseantonio.norte.lopez.cuadragastosapp.data.network
 
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.ContactoRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GastoRequest
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.request.GrupoRequest
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.GastoResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.SaldoUsuarioGrupo
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioGrupoResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,4 +19,11 @@ interface GastoApiService {
 
     @GET("/gasto/gastogrupo")
     suspend fun cargarGastosGrupo(@Query("idGrupo") idGrupo: Int?): Response<List<GastoResponse>>
+
+    @GET("/gasto/saldogrupo")
+    suspend fun obtenerCuentasClarasDelGrupo(@Query("idGrupo") idGrupo: Int?): Response<List<SaldoUsuarioGrupo>>
+
+
+    @POST("/gasto/saldarcuentas")
+    suspend fun saldarCuentasGrupo(@Query("idGrupo") idGrupo: Int?): Response<Unit>
 }

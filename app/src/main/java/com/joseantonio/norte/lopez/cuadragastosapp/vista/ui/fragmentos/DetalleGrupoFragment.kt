@@ -21,14 +21,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.joseantonio.norte.lopez.cuadragastosapp.R
 import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.GastoRepository
-import com.joseantonio.norte.lopez.cuadragastosapp.data.Repository.GrupoRepository
+import android.graphics.Color
 import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.GastoResponse
-import com.joseantonio.norte.lopez.cuadragastosapp.data.dto.response.UsuarioGrupoResponse
+import com.joseantonio.norte.lopez.cuadragastosapp.data.local.SessionManager
 import com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.adapter.GastoAdapter
-import com.joseantonio.norte.lopez.cuadragastosapp.vista.ui.adapter.UsuarioGrupoAdapter
 import com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel.DetalleGruposViewModel
 import com.joseantonio.norte.lopez.cuadragastosapp.vista.viewmodel.SharedViewModel
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 import kotlin.getValue
 
 class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
@@ -36,6 +36,8 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
     companion object {
         private const val TAG = "DetalleGrupoFragment"
     }
+
+    private lateinit var sessionManager: SessionManager
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: DetalleGruposViewModel by viewModels {
@@ -61,6 +63,13 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
         val btnAtras = view.findViewById<ImageButton>(R.id.btnAtras)
         val btnAnadirAmigo = view.findViewById<MaterialButton>(R.id.btnAnadirAmigo)
         val fabAnadirGasto = view.findViewById<ExtendedFloatingActionButton>(R.id.fabAnadirGasto)
+        val btnSaldarCuentas = view.findViewById<MaterialButton>(R.id.btnSaldarCuentas)
+        val lblBalance = view.findViewById<TextView>(R.id.lblBalance)
+        val tvMontoBalance = view.findViewById<TextView>(R.id.tvMontoBalance)
+
+        sessionManager = SessionManager(requireContext())
+
+        val idUsuario = sessionManager.getIdUsuario()
 
         setupRecyclerView(view)
 
@@ -78,6 +87,7 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
                                 Log.d(TAG, "Detectado nuevo idGrupo: $idDelGrupoValido. Cargando gastos...")
                                 idGrupo = idDelGrupoValido
                                 viewModel.cargarGastosGrupo(idGrupo)
+                                viewModel.obtenerCuentasClarasDelGrupo(idGrupo)
                             }
                         }
                         val soyAdmin = miUsuario.rol == "ADMINISTRADOR"
@@ -86,6 +96,12 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
                     }
                 }
             }
+        }
+
+        btnSaldarCuentas.setOnClickListener {
+
+            viewModel.saldarCuentasGrupo(idGrupo)
+
         }
 
         viewModel.gastoGrupo.observe(viewLifecycleOwner) { listaGastos ->
@@ -98,10 +114,57 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
             }
         }
 
+        viewModel.saldoGrupo.observe(viewLifecycleOwner) { saldoGrupo ->
+            Log.d(TAG, "Observador saldoGrupo: Recibidos ${saldoGrupo?.size ?: 0} saldo")
+            if (!saldoGrupo.isNullOrEmpty() && idUsuario != null) {
+
+
+                val miSaldo = saldoGrupo.find { it.idUsuario == idUsuario }
+
+                if (miSaldo != null) {
+
+                    val saldo = miSaldo.saldoFinal ?: 0.0
+                    val saldoSeguro = saldo as BigDecimal
+
+                    when {
+                        saldoSeguro > BigDecimal.ZERO -> {
+                            lblBalance.text = "Te deben en total"
+                            tvMontoBalance.text = String.format("%.2f €", saldoSeguro)
+                            tvMontoBalance.setTextColor(Color.parseColor("#5BC5A7")) // Verde
+                        }
+
+                        saldoSeguro > BigDecimal.ZERO -> {
+                            lblBalance.text = "Tú debes en total"
+                            tvMontoBalance.text = String.format("%.2f €", saldoSeguro)
+                            tvMontoBalance.setTextColor(Color.parseColor("#FF5252")) // Rojo
+                        }
+
+                        else -> {
+                            lblBalance.text = "Estás al día"
+                            tvMontoBalance.text = "0.00 €"
+                            tvMontoBalance.setTextColor(Color.parseColor("#FFFFFF")) // Blanco
+                        }
+                    }
+                } else {
+                    lblBalance.text = "Sin transacciones"
+                    tvMontoBalance.text = "0.00 €"
+                    tvMontoBalance.setTextColor(Color.parseColor("#888888"))
+                }
+            }
+
+        }
+
         viewModel.error.observe(viewLifecycleOwner) { msg ->
             Log.e(TAG, "Observador error: Mensaje de error recibido -> '$msg'")
             msg?.let {
                 Toast.makeText(requireContext(), "ERROR: $msg", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.resultado.observe(viewLifecycleOwner) { msg ->
+            Log.e(TAG, "Observador resultado: Mensaje de exito recibido -> '$msg'")
+            msg?.let {
+                mostrarModalCuentaSaldada()
             }
         }
 
@@ -141,6 +204,26 @@ class DetalleGrupoFragment : Fragment(R.layout.fragment_detalle_grupo) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
         }
+    }
+
+    private fun mostrarModalCuentaSaldada() {
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_cuenta_saldada, null)
+
+        val dialog = com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnModalEntendido).setOnClickListener {
+            dialog.dismiss()
+
+            viewModel.cargarGastosGrupo(idGrupo)
+        }
+
+        dialog.show()
     }
 
     override fun onDestroyView() {
